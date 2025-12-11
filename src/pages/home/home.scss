@@ -1,6 +1,10 @@
 :root {
     --inactive: #9ca3af;
 }
+button:active {
+    scale: 0.9;
+    transition: 0.2s;
+}
 
 .home {
     margin-top: 16px;
@@ -75,8 +79,10 @@
             gap: 8px;
             cursor: pointer;
             --tw-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-            --tw-shadow-colored: 0 0 20px var(--tw-shadow-color);
-            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+            box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+            &:hover {
+                background: rgb(34 211 238);
+            }
         }
     }
     .additions {
@@ -91,6 +97,14 @@
             color: white;
             text-align: start;
             cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                background: #000;
+                background-color: rgb(255 255 255 / 0.1);
+            }
+            &:first-child:hover {
+                background-image: linear-gradient(to bottom right, rgb(88 28 135 / 0.4) , rgb(15 23 42 / 0.4));
+            }
             .addition-image {
                 width: 40px;
                 height: 40px;
@@ -149,6 +163,10 @@
             justify-content: space-between;
             border: none;
             cursor: pointer;
+            transition: 0.2s;
+            &:hover {
+                background-color: rgba(31, 31, 31, 0.9);
+            }
         }
     }
 }
