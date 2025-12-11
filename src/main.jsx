@@ -2,9 +2,20 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 // import './index.css'
 import Home from './pages/home/home'
+import Stars from './pages/stars/stars'
+import Premium from './pages/premium/premium'
+import Orders from './pages/orders/orders'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Home />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/stars" element={<Stars />} />
+        <Route path="/premium" element={<Premium />} />
+        <Route path="/orders" element={<Orders />} />
+      </Routes>
+    </BrowserRouter>
   </StrictMode>,
 )

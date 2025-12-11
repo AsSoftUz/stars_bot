@@ -1,7 +1,7 @@
 const Stars = () => {
     return (
         <>
-            <h2>Stars</h2>
+            <h2>Orders</h2>
         </>
     )
 }

@@ -3,6 +3,7 @@
 }
 
 .home {
+    margin-top: 16px;
     .user-info {
         width: 100%;
         height: 50px;
@@ -60,18 +61,93 @@
                 height: 32px;
             }
         }
-        a {
+        button {
             width: 90%;
             padding: 14px 24px;
-            // background: #a9d606;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
             color: #000;
-            font-weight: 800;
+            font-weight: 700;
+            border: none;
             gap: 8px;
+            cursor: pointer;
+            --tw-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+            --tw-shadow-colored: 0 0 20px var(--tw-shadow-color);
+            box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+        }
+    }
+    .additions {
+        display: flex;
+        gap: 16px;
+
+        .premium, .history {
+            padding: 20px;
+            width: 50%;
+            margin: 24px 0;
+            border-radius: 24px;
+            color: white;
+            text-align: start;
+            cursor: pointer;
+            .addition-image {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 1px solid rgb(255 255 255 / 0.1);;
+            }
+            .bg {
+                background-image: linear-gradient(to bottom right, #a855f7, #db2777);
+            }
+            h3 {
+                line-height: 28px;
+            }
+            p {
+                font-size: 12px;
+                color: var(--inactive);
+            }
+        }
+    }
+    .offers {
+        border-radius: 24px;
+        overflow: hidden;
+        border: none;
+        background-image: linear-gradient(to right, #2563eb, #06b6d4);
+        .offers-main {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            span {
+                font-size: 10px;
+                padding: 2px 8px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                border-radius: 4px;
+            }
+            h3 {
+                margin: 8px 0 4px 0;
+            }
+            p {
+                color: rgb(255 255 255 / 0.8);;
+                font-size: 12px;
+                font-weight: 400;
+            }
+        }
+        button {
+            width: 100%;
+            background-color: rgb(31, 31, 31);
+            text-decoration: none;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: none;
         }
     }
 }
