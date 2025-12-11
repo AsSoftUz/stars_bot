@@ -1,0 +1,81 @@
+.stars {
+    margin-bottom: 40px;
+    nav {
+        width: 100%;
+        height: 78px;
+        border-bottom: 1px solid rgb(255 255 255 / 0.05);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgb(255 255 255 / 0.05);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .left {
+            p {
+                font-size: 14px;
+                color: var(--inactive);
+            }
+        }
+    }
+    .title {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 40px 0;
+        .title-img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-image: linear-gradient(to bottom right, #facc15, #f97316);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            --tw-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+        }
+        h2 {
+            margin: 12px 0 4px 0;
+        }
+        p {
+            color: var(--inactive);
+            line-height: 22px;
+        }
+    }
+    .star-cards {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        .card {
+            padding: 16px;
+            border-radius: 24px;
+            .top {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin: 8px 0 16px 0;
+                h3 {
+                    font-size: 24px;
+                }
+            }
+            button {
+                width: 100%;
+                padding: 14px 24px;
+                border-radius: 12px;
+                color: white;
+                cursor: pointer;
+                font-size: 14px;
+                font-weight: 700;
+            }
+        }
+    }
+}
