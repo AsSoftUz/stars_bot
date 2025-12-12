@@ -1,9 +1,9 @@
-.premium {
+.premium-page {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.premium nav {
+.premium-page nav {
   width: 100%;
   height: 78px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -11,7 +11,7 @@
   align-items: center;
   gap: 16px;
 }
-.premium nav .back-btn {
+.premium-page nav .back-btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -22,11 +22,11 @@
   justify-content: center;
   cursor: pointer;
 }
-.premium nav .left p {
+.premium-page nav .left p {
   font-size: 14px;
   color: var(--inactive);
 }
-.premium .hero {
+.premium-page .hero {
   width: 100%;
   padding: 32px;
   margin-top: 24px;
@@ -38,7 +38,7 @@
   background-image: linear-gradient(to bottom, rgba(88, 28, 135, 0.5), transparent);
   overflow: hidden;
 }
-.premium .hero .bg-circle {
+.premium-page .hero .bg-circle {
   position: absolute;
   top: -40px;
   width: 160px;
@@ -47,7 +47,7 @@
   background: rgba(168, 85, 247, 0.3);
   filter: blur(60px);
 }
-.premium .hero h2 {
+.premium-page .hero h2 {
   font-size: 30px;
   margin-bottom: 8px;
   margin-top: 16px;
@@ -55,20 +55,20 @@
           background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.premium .hero p {
+.premium-page .hero p {
   color: var(--inactive);
 }
-.premium .plans {
+.premium-page .plans {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-top: 24px;
 }
-.premium .plans h3 {
+.premium-page .plans h3 {
   color: rgb(156, 163, 175);
 }
-.premium .plans .plan {
+.premium-page .plans .plan {
   border: 1px solid #333;
   padding: 16px;
   border-radius: 16px;
@@ -78,36 +78,36 @@
   gap: 16px;
   transition: 0.2s;
 }
-.premium .plans .plan input {
+.premium-page .plans .plan input {
   width: 24px;
   height: 24px;
 }
-.premium .plans .plan.active {
+.premium-page .plans .plan.active {
   border-color: #7d5cff;
   background-image: linear-gradient(to right, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.4));
   --tw-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
   box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), var(--tw-shadow);
   scale: 1.01;
 }
-.premium .plans .plan.active .price {
+.premium-page .plans .plan.active .price {
   color: rgb(192, 132, 252);
 }
-.premium .plans .contents {
+.premium-page .plans .contents {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.premium .plans .contents .top {
+.premium-page .plans .contents .top {
   display: flex;
   align-items: center;
   gap: 16px;
 }
-.premium .plans .contents .top h3 {
+.premium-page .plans .contents .top h3 {
   color: white;
   line-height: 28px;
 }
-.premium .plans .contents .top .save {
+.premium-page .plans .contents .top .save {
   background: rgb(75, 85, 99);
   font-size: 12px;
   padding: 3px 6px;
@@ -116,31 +116,31 @@
   top: -10px;
   right: -10px;
 }
-.premium .plans .contents .per-month {
+.premium-page .plans .contents .per-month {
   font-size: 12px;
   opacity: 0.7;
 }
-.premium .plans .contents .price {
+.premium-page .plans .contents .price {
   font-size: 18px;
   font-weight: 700;
 }
-.premium .features {
+.premium-page .features {
   border-radius: 24px;
   padding: 24px;
   margin-top: 24px;
   width: 100%;
 }
-.premium .features h3 {
+.premium-page .features h3 {
   margin-bottom: 16px;
 }
-.premium .features p {
+.premium-page .features p {
   color: var(--inactive);
   display: flex;
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
 }
-.premium .subscribe-btn {
+.premium-page .subscribe-btn {
   width: 90%;
   font-size: 14px;
   color: white;

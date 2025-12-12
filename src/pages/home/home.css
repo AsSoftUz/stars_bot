@@ -169,4 +169,7 @@ button:active {
 }
 .home .offers button:hover {
   background-color: rgba(31, 31, 31, 0.9);
+}
+.home .offers button:active {
+  scale: 1;
 }/*# sourceMappingURL=home.css.map */

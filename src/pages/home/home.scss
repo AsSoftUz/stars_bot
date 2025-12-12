@@ -167,6 +167,9 @@ button:active {
             &:hover {
                 background-color: rgba(31, 31, 31, 0.9);
             }
+            &:active {
+                scale: 1;
+            }
         }
     }
 }

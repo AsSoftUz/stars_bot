@@ -1,0 +1,44 @@
+.orders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 32px;
+    .img {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        background: rgb(34 197 94 / 0.1);
+        border: 1px solid rgb(34 197 94 / 0.2);
+        p {
+            font-size: 30px;
+        }
+    }
+    .text {
+        margin: 24px 0;
+        h3 {
+            line-height: 28px;
+        }
+        p {
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--inactive);
+        }
+    }
+    button {
+        padding: 8px 24px;
+        color: rgb(6 182 212);
+        background: rgb(6 182 212 / 0.1);
+        border-radius: 8px;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s;
+        &:hover {
+            background: rgb(6 182 212 / 0.2);
+        }
+    }
+}
