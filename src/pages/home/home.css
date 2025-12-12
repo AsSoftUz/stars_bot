@@ -8,7 +8,7 @@ button:active {
 }
 
 .home {
-  margin-top: 16px;
+  margin: 16px 0 32px 0;
 }
 .home .user-info {
   width: 100%;
