@@ -1,1 +1,94 @@
-/*# sourceMappingURL=tranzaction.css.map */
+.tranzaction {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tranzaction nav {
+  width: 100%;
+  height: 78px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.tranzaction nav .back-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.tranzaction nav .left p {
+  font-size: 14px;
+  color: var(--inactive);
+}
+.tranzaction .plans {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+.tranzaction .plans h3 {
+  color: rgb(156, 163, 175);
+}
+.tranzaction .plans .plan {
+  border: 1px solid #333;
+  padding: 16px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 16px;
+  transition: 0.2s;
+}
+.tranzaction .plans .plan input {
+  width: 24px;
+  height: 24px;
+  visibility: hidden;
+}
+.tranzaction .plans .plan.active {
+  border-color: #7d5cff;
+  background-image: linear-gradient(to right, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.4));
+  --tw-shadow: 0 0 20px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 0 rgba(0, 0, 0, 0), 0 0 rgba(0, 0, 0, 0), var(--tw-shadow);
+  scale: 1.01;
+}
+.tranzaction .plans .plan.active input {
+  visibility: visible;
+}
+.tranzaction .plans .contents {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--inactive);
+}
+.tranzaction .plans .contents .content {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.tranzaction .plans .contents .content .card-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 204, 204, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tranzaction .plans .contents .content .top {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  align-items: start;
+}
+.tranzaction .plans .contents .content .top h3 {
+  color: white;
+  line-height: 28px;
+}/*# sourceMappingURL=tranzaction.css.map */
