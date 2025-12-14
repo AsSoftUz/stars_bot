@@ -103,7 +103,7 @@ button:active {
 .home .additions .premium:hover, .home .additions .history:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
-.home .additions .premium:first-child, .home .additions .history:first-child {
+.home .additions .premium:last-child, .home .additions .history:last-child {
   background-image: linear-gradient(to bottom right, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.4));
 }
 .home .additions .premium .addition-image, .home .additions .history .addition-image {
@@ -113,10 +113,8 @@ button:active {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.home .additions .premium .bg, .home .additions .history .bg {
-  background-image: linear-gradient(to bottom right, #a855f7, #db2777);
+  overflow: hidden;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
 }
 .home .additions .premium h3, .home .additions .history h3 {
   line-height: 28px;

@@ -1,5 +1,6 @@
 import "./home.css";
-import img from "../../assets/profile.jpg";
+import PremiumImg1 from "../../assets/premium.jpg";
+import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -43,15 +44,21 @@ const Home = () => {
                 </button>
             </div>
             <div className="additions">
-                <button onClick={() => navigate("/premium")} className="premium glass-card">
-                    <div className="addition-image bg"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crown text-white" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg></div>
-                    <h3>Premium</h3>
-                    <p>Unlock exclusive features</p>
-                </button>
                 <button onClick={() => navigate("/stars")} className="history glass-card">
-                    <div className="addition-image"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag text-cyan-400" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg></div>
+                    <div className="addition-image">
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag text-cyan-400" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg> */}
+                        <img src={PremiumImg} alt="" width="42" height="42" />
+                    </div>
                     <h3>Stars</h3>
                     <p>Get stars</p>
+                </button>
+                <button onClick={() => navigate("/premium")} className="premium glass-card">
+                    <div className="addition-image bg">
+                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crown text-white" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg> */}
+                        <img src={PremiumImg1} alt="" width="38" height="38" />
+                    </div>
+                    <h3>Premium</h3>
+                    <p>Unlock exclusive features</p>
                 </button>
             </div>
             <div className="offers glass-card">

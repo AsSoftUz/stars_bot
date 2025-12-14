@@ -100,7 +100,7 @@ button:active {
             &:hover {
                 background-color: rgb(255 255 255 / 0.1);
             }
-            &:first-child {
+            &:last-child {
                 background-image: linear-gradient(to bottom right, rgb(88 28 135 / 0.4) , rgb(15 23 42 / 0.4));
             }
             .addition-image {
@@ -110,11 +110,12 @@ button:active {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                border: 1px solid rgb(255 255 255 / 0.1);;
+                overflow: hidden;
+                border: 1.5px solid rgb(255 255 255 / 0.1);;
             }
-            .bg {
-                background-image: linear-gradient(to bottom right, #a855f7, #db2777);
-            }
+            // .bg {
+            //     background-image: linear-gradient(to bottom right, #a855f7, #db2777);
+            // }
             h3 {
                 line-height: 28px;
             }
