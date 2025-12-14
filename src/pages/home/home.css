@@ -50,14 +50,14 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: linear-gradient(to bottom right, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.4));
+  background-image: linear-gradient(to bottom right, rgba(16, 0, 29, 0.733), rgba(12, 57, 160, 0.904));
   border-radius: 24px;
 }
 .home .total-balance p {
   color: var(--inactive);
 }
 .home .total-balance h1 {
-  font-size: 48px;
+  font-size: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
