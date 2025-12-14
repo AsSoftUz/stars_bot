@@ -1,20 +1,37 @@
 import "./home.css";
 import img from "../../assets/profile.jpg";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Home = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
+    useEffect(() => {
+        const tg = window.Telegram.WebApp;
+        tg.expand(); // ekranni to'liq qiladi
+        
+        const userData = tg.initDataUnsafe?.user;
+    
+        setUser(userData);
+    }, []);
+
+
     return (
         <div className="home">
+            {user ? (
             <div className="user-info">
                 <div className="name">
-                    <img src={img} alt="Profile picture" />
+                    <img src={user.photo_url} alt="Profile picture" />
                     <h1>
-                        John Doe
-                        <p>@john</p>
+                        {user.first_name}
+                        <p>@{user.username}</p>
                     </h1>
                 </div>
+                <p className="glass">ID: {user.id}</p>
             </div>
+            ) : (
+                <h1>Saytni faqat Telegram orqali oching.</h1>
+            )}
             <div className="total-balance glass-card">
                 <p>Total balance</p>
                 <h1>
