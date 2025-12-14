@@ -27,7 +27,6 @@ const Home = () => {
                         <p>@{user.username}</p>
                     </h1>
                 </div>
-                <p className="glass">ID: {user.id}</p>
             </div>
             ) : (
                 <h1>Saytni faqat Telegram orqali oching.</h1>
