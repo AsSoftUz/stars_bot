@@ -99,10 +99,9 @@ button:active {
             cursor: pointer;
             transition: 0.2s;
             &:hover {
-                background: #000;
                 background-color: rgb(255 255 255 / 0.1);
             }
-            &:first-child:hover {
+            &:first-child {
                 background-image: linear-gradient(to bottom right, rgb(88 28 135 / 0.4) , rgb(15 23 42 / 0.4));
             }
             .addition-image {

@@ -102,10 +102,9 @@ button:active {
   transition: 0.2s;
 }
 .home .additions .premium:hover, .home .additions .history:hover {
-  background: #000;
   background-color: rgba(255, 255, 255, 0.1);
 }
-.home .additions .premium:first-child:hover, .home .additions .history:first-child:hover {
+.home .additions .premium:first-child, .home .additions .history:first-child {
   background-image: linear-gradient(to bottom right, rgba(88, 28, 135, 0.4), rgba(15, 23, 42, 0.4));
 }
 .home .additions .premium .addition-image, .home .additions .history .addition-image {
