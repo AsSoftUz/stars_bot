@@ -47,7 +47,6 @@ export const useCreateUser = () => {
 
     try {
       const url = `${API_BASE_URL}/auth/users/`;
-      document.writeln("API ga yuborilayotgan URL:", url); // <<< Shu qatorni qo'shing!
 
       const response = await axios.post(url, payload);  
 
