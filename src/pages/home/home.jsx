@@ -28,8 +28,7 @@ const Home = () => {
                 user_id: userData.id,
                 fullname: `${userData.first_name || ""} ${userData.last_name || ""}`,
                 username: userData.username || null,
-                phone: "",
-                balance: 123456
+                phone: ""
             };
 
             try {
