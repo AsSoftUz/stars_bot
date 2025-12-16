@@ -28,15 +28,15 @@ const Home = () => {
                 user_id: userData.id,
                 fullname: `${userData.first_name || ""} ${userData.last_name || ""}`,
                 username: userData.username || null,
-                phone: "321",
+                phone: "",
                 balance: 123456
             };
 
             try {
                 const newUser = await createUser(payload);
-                document.writeln("Foydalanuvchi DBga qo'shildi:", newUser);
+                console.log("Foydalanuvchi DBga qo'shildi:", newUser);
             } catch (e) {
-                document.writeln("Foydalanuvchi yaratishda xato:", e);
+                console.log("Foydalanuvchi yaratishda xato:", e);
             }
         };
 
