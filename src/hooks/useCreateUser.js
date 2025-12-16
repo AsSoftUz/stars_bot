@@ -47,8 +47,9 @@ export const useCreateUser = () => {
 
     try {
       const url = `${API_BASE_URL}/auth/users/`;
-      
-      const response = await axios.post(url, payload);
+      console.log("API ga yuborilayotgan URL:", url); // <<< Shu qatorni qo'shing!
+
+      const response = await axios.post(url, payload);  
 
       setData(response.data); // API'dan kelgan javobni saqlash
       console.log("Foydalanuvchi yaratildi:", response.data);
