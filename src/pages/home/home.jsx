@@ -8,30 +8,40 @@ import { useCreateUser } from "../../hooks/useCreateUser"
 const Home = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
-    const { createUser } = useCreateUser();
+    const { createUser, loading, error } = useCreateUser();
 
     useEffect(() => {
         const tg = window.Telegram.WebApp;
         tg.expand();
 
         const userData = tg.initDataUnsafe?.user;
-        if (!userData) return;
+
+        if (!userData) {
+            setUser(null);
+            return;
+        }
 
         setUser(userData);
 
-        const payload = {
-            user_id: userData.id,
-            fullname: `${userData.first_name || ""} ${userData.last_name || ""}`.trim(),
-            username: userData.username || "",
-            phone: "" 
+        const registerUser = async () => {
+            const payload = {
+                user_id: userData.id,
+                fullname: `${userData.first_name || ""} ${userData.last_name || ""}`,
+                username: userData.username || null,
+                phone: ""
+            };
+
+            try {
+                const newUser = await createUser(payload);
+                console.log("Foydalanuvchi DBga qo'shildi:", newUser);
+            } catch (e) {
+                console.error("Foydalanuvchi yaratishda xato:", e);
+            }
         };
 
-        createUser(payload).catch((err) => {
-            console.log("User already exists yoki xatolik:", err);
-        });
+        registerUser();
 
     }, []);
-
 
     return (
         <div className="home">
