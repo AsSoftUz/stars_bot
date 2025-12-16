@@ -3,7 +3,7 @@ import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useCreateUser } from "../../hooks/useCreateUser";
+import { useCreateUser } from "../../hooks/useCreateUser"
 
 const Home = () => {
     const navigate = useNavigate();
@@ -25,9 +25,6 @@ const Home = () => {
             username: userData.username || "",
             phone: "" 
         };
-
-        document.writeln(payload)
-
 
         createUser(payload).catch((err) => {
             console.log("User already exists yoki xatolik:", err);

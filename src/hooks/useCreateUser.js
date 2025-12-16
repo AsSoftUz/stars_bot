@@ -11,7 +11,6 @@ export const useCreateUser = () => {
 
     try {
       const res = await api.post("/auth/users/", payload);
-      document.writeln(res.data)
       return res.data;
     } catch (err) {
       setError(err.response?.data || "Xatolik yuz berdi");
