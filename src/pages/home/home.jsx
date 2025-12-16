@@ -25,7 +25,7 @@ const Home = () => {
 
         const registerUser = async () => {
             const payload = {
-                user_id: userData.user_id,
+                user_id: userData.id,
                 fullname: `${userData.first_name || ""} ${userData.last_name || ""}`,
                 username: userData.username || null,
                 phone: "321",
