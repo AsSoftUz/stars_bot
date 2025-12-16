@@ -3,39 +3,74 @@ import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import useRegisterUser from '../../hooks/postUserData'; // Yangi hook'ni import qilish
 
 const Home = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    
+    // Telegram'dan to'g'ridan-to'g'ri olingan xavfli ma'lumot
+    const [telegramUser, setTelegramUser] = useState(null); 
+    
+    // POST hook'dan funksiya va holatlarni olish
+    const { registerUser, loading: registering, error: registerError } = useRegisterUser();
+
     useEffect(() => {
         const tg = window.Telegram.WebApp;
-        tg.expand(); // ekranni to'liq qiladi
+        tg.expand();
         
         const userData = tg.initDataUnsafe?.user;
-    
-        setUser(userData);
-    }, []);
+        
+        if (userData) {
+            setTelegramUser(userData);
+            
+            // 1. Agar Telegram foydalanuvchisi mavjud bo'lsa, uni serverga POST qilish
+            // Ro'yxatdan o'tkazishni asinxron tarzda chaqirish
+            registerUser(userData)
+                .then(response => {
+                    // Agar ro'yxatdan o'tish muvaffaqiyatli bo'lsa (yoki allaqachon ro'yxatdan o'tgan bo'lsa)
+                    console.log("Backend ro'yxatdan o'tkazish tugadi:", response);
+                })
+                .catch(err => {
+                    // Xatolarni handle qilish (masalan, allaqachon ro'yxatdan o'tgan)
+                    console.error("Ro'yxatdan o'tkazishda xato yuz berdi:", err);
+                });
+        }
+        
+    }, []); // registerUser useCallback tufayli xavfsiz
 
+    // Yuklanish va Xato Holatlarini render qilish
+    if (registering) {
+        return <div className="home loading-screen">Foydalanuvchi ro'yxatdan o'tkazilmoqda...</div>;
+    }
+
+    if (registerError) {
+        return <div className="home error-screen">Ro'yxatdan o'tkazish xatosi: {registerError}</div>;
+    }
+    
+    // Hozirda biz TG initDataUnsafe dan kelgan ma'lumotni ishlatyapmiz,
+    // lekin Productionda har doim BACKEND tomonidan TASDIQLANGAN ma'lumotni ishlatish kerak.
+    const userDisplay = telegramUser; 
 
     return (
         <div className="home">
-            {user ? (
-            <div className="user-info">
-                <div className="name">
-                    <img src={user.photo_url} alt="Profile picture" />
-                    <h1>
-                        {user.first_name}
-                        <p>@{user.username}</p>
-                    </h1>
+            {userDisplay ? (
+                <div className="user-info">
+                    <div className="name">
+                        {userDisplay.photo_url && <img src={userDisplay.photo_url} alt="Profile picture" />}
+                        <h1>
+                            {userDisplay.first_name}
+                            <p>@{userDisplay.username}</p>
+                        </h1>
+                    </div>
                 </div>
-            </div>
             ) : (
                 <h1>Saytni faqat Telegram orqali oching.</h1>
             )}
+            
+            {/* Qolgan qism o'zgarishsiz qoldi */}
             <div className="total-balance glass-card">
                 <p>Total balance</p>
                 <h1>
-                    {/* <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#facc15" stroke="#facc15" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path></svg> */}
                     100,000 UZS
                 </h1>
                 <button onClick={() => navigate("/stars")} className="neon-glow">
@@ -46,7 +81,6 @@ const Home = () => {
             <div className="additions">
                 <button onClick={() => navigate("/stars")} className="history glass-card">
                     <div className="addition-image">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag text-cyan-400" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg> */}
                         <img src={PremiumImg} alt="" width="42" height="42" />
                     </div>
                     <h3>Stars</h3>
@@ -54,7 +88,6 @@ const Home = () => {
                 </button>
                 <button onClick={() => navigate("/premium")} className="premium glass-card">
                     <div className="addition-image bg">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crown text-white" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg> */}
                         <img src={PremiumImg1} alt="" width="38" height="38" />
                     </div>
                     <h3>Premium</h3>
