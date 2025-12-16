@@ -28,7 +28,8 @@ export const useCreateUser = () => {
   const createUser = useCallback(async (userData) => {
     // Ma'lumotlar to'g'ri kelishini tekshirish
     if (!userData || !API_BASE_URL) {
-      setError("API bazaviy URL'i mavjud emas yoki ma'lumotlar to'liq emas.");
+      document.writeln(API_BASE_URL)
+      setError({API_BASE_URL});
       return;
     }
 
