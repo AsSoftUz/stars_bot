@@ -1,73 +1,105 @@
 import "./home.css";
-import PremiumImg1 from "../../assets/premium.jpg";
-import PremiumImg from "../../assets/stars.png";
+// import img from "../../assets/profile.jpg"; // Bu o'zgaruvchi endi ishlatilmayapti
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import useRegisterUser from '../../hooks/postUserData'; // Yangi hook'ni import qilish
+import { useCreateUser } from '../../hooks/useCreateUser'; // <<< Custom Hook import qilindi!
+
+// Telegram initDataUnsafe obyektidagi user ma'lumotlarining turi
+// user_id juda katta bo'lishi mumkinligini eslatib qo'ying
+// Telegram user obyekti fieldlari: id, first_name, username, photo_url, language_code, is_premium, ...
+/**
+ * @typedef {object} TelegramUser
+ * @property {number} id - Foydalanuvchi ID'si (katta butun son)
+ * @property {string} first_name
+ * @property {string} [username]
+ * @property {string} [photo_url]
+ * @property {boolean} [is_premium]
+ */
+
 
 const Home = () => {
     const navigate = useNavigate();
+    /** @type {[TelegramUser | null, import("react").Dispatch<import("react").SetStateAction<TelegramUser | null>>]} */
+    const [user, setUser] = useState(null);
     
-    // Telegram'dan to'g'ridan-to'g'ri olingan xavfli ma'lumot
-    const [telegramUser, setTelegramUser] = useState(null); 
-    
-    // POST hook'dan funksiya va holatlarni olish
-    const { registerUser, loading: registering, error: registerError } = useRegisterUser();
+    // Foydalanuvchining APIga yaratilganligini kuzatish uchun holat
+    const [isUserCreated, setIsUserCreated] = useState(false); 
 
+    // Custom hookni chaqirish
+    const { 
+        createUser, 
+        data: apiResponseData, // API'dan muvaffaqiyatli kelgan ma'lumot
+        error: apiError,       // API so'rovida yuz bergan xato
+        loading: apiLoading    // API so'rovi yuklanish holati
+    } = useCreateUser();
+
+    // 1. Telegram WebApp ma'lumotlarini olish va API'ga yuborish
     useEffect(() => {
         const tg = window.Telegram.WebApp;
-        tg.expand();
-        
+        tg.expand(); // ekranni to'liq qiladi
+
+        /** @type {TelegramUser | undefined} */
         const userData = tg.initDataUnsafe?.user;
-        
+
         if (userData) {
-            setTelegramUser(userData);
+            setUser(userData);
             
-            // 1. Agar Telegram foydalanuvchisi mavjud bo'lsa, uni serverga POST qilish
-            // Ro'yxatdan o'tkazishni asinxron tarzda chaqirish
-            registerUser(userData)
-                .then(response => {
-                    // Agar ro'yxatdan o'tish muvaffaqiyatli bo'lsa (yoki allaqachon ro'yxatdan o'tgan bo'lsa)
-                    console.log("Backend ro'yxatdan o'tkazish tugadi:", response);
-                })
-                .catch(err => {
-                    // Xatolarni handle qilish (masalan, allaqachon ro'yxatdan o'tgan)
-                    console.error("Ro'yxatdan o'tkazishda xato yuz berdi:", err);
+            // Agar foydalanuvchi ma'lumotlari mavjud bo'lsa va hali APIga yuborilmagan bo'lsa
+            if (!isUserCreated) {
+                console.log("Telegram foydalanuvchisini APIga yuborishga tayyorlanmoqda:", userData.id);
+
+                // API'ga yuboriladigan ma'lumotlarni tayyorlash
+                const userPayload = {
+                    user_id: userData.id, // Katta butun son (BigInt) bo'lishi mumkin
+                    fullname: `${userData.first_name}${userData.last_name ? ' ' + userData.last_name : ''}`,
+                    phone: '', // Telegram Mini App odatda telefon raqamini to'g'ridan-to'g'ri bermaydi
+                    username: userData.username || `id_${userData.id}`,
+                };
+
+                // Custom hook funksiyasini chaqirish
+                createUser(userPayload).then(() => {
+                    // Muvaffaqiyatli so'rovdan keyin holatni yangilash
+                    setIsUserCreated(true);
+                }).catch(() => {
+                    // Xato yuz bersa ham isUserCreated ni true qilib qo'yish
+                    // keyingi yuklanishda qayta urinmaslik uchun (yoki o'zgartirishingiz mumkin)
+                    setIsUserCreated(true); 
                 });
+            }
         }
-        
-    }, []); // registerUser useCallback tufayli xavfsiz
+    }, [isUserCreated, createUser]); // createUser useCallback ichida bo'lgani uchun dependensiya sifatida ishlatish xavfsiz
 
-    // Yuklanish va Xato Holatlarini render qilish
-    if (registering) {
-        return <div className="home loading-screen">Foydalanuvchi ro'yxatdan o'tkazilmoqda...</div>;
-    }
-
-    if (registerError) {
-        return <div className="home error-screen">Ro'yxatdan o'tkazish xatosi: {registerError}</div>;
-    }
-    
-    // Hozirda biz TG initDataUnsafe dan kelgan ma'lumotni ishlatyapmiz,
-    // lekin Productionda har doim BACKEND tomonidan TASDIQLANGAN ma'lumotni ishlatish kerak.
-    const userDisplay = telegramUser; 
-
+    // 2. Render qismi
     return (
         <div className="home">
-            {userDisplay ? (
+            {/* Foydalanuvchi ma'lumotlari bloki */}
+            {user ? (
                 <div className="user-info">
                     <div className="name">
-                        {userDisplay.photo_url && <img src={userDisplay.photo_url} alt="Profile picture" />}
+                        <img 
+                            src={user.photo_url || 'default-profile-icon.png'} // Agar Telegram rasm bermasa, default rasm
+                            alt="Profile picture" 
+                        />
                         <h1>
-                            {userDisplay.first_name}
-                            <p>@{userDisplay.username}</p>
+                            {user.first_name}
+                            <p>@{user.username || 'username_not_set'}</p>
                         </h1>
                     </div>
                 </div>
             ) : (
                 <h1>Saytni faqat Telegram orqali oching.</h1>
             )}
-            
-            {/* Qolgan qism o'zgarishsiz qoldi */}
+
+            {/* API Holati */}
+            <div className="api-status">
+                {apiLoading && <p style={{ color: 'yellow' }}>✅ Foydalanuvchi ma'lumotlari jo'natilmoqda...</p>}
+                {apiError && <p style={{ color: 'red' }}>❌ Xato yuz berdi: {(apiError.message || apiError)}</p>}
+                {apiResponseData && !apiError && !apiLoading && (
+                    <p style={{ color: 'lime' }}>✅ Foydalanuvchi API'da muvaffaqiyatli yaratildi!</p>
+                )}
+            </div>
+
+            {/* Qolgan UI elementlari */}
             <div className="total-balance glass-card">
                 <p>Total balance</p>
                 <h1>
@@ -78,22 +110,20 @@ const Home = () => {
                     Top up balance
                 </button>
             </div>
+            
             <div className="additions">
-                <button onClick={() => navigate("/stars")} className="history glass-card">
-                    <div className="addition-image">
-                        <img src={PremiumImg} alt="" width="42" height="42" />
-                    </div>
-                    <h3>Stars</h3>
-                    <p>Get stars</p>
-                </button>
                 <button onClick={() => navigate("/premium")} className="premium glass-card">
-                    <div className="addition-image bg">
-                        <img src={PremiumImg1} alt="" width="38" height="38" />
-                    </div>
+                    <div className="addition-image bg"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-crown text-white" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg></div>
                     <h3>Premium</h3>
                     <p>Unlock exclusive features</p>
                 </button>
+                <button onClick={() => navigate("/stars")} className="history glass-card">
+                    <div className="addition-image"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-shopping-bag text-cyan-400" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg></div>
+                    <h3>Stars</h3>
+                    <p>Get stars</p>
+                </button>
             </div>
+            
             <div className="offers glass-card">
                 <div className="offers-main">
                     <div className="details">
