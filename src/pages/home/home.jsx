@@ -33,9 +33,9 @@ const Home = () => {
 
             try {
                 const newUser = await createUser(payload);
-                console.log("Foydalanuvchi DBga qo'shildi:", newUser);
+                document.writeln("Foydalanuvchi DBga qo'shildi:", newUser);
             } catch (e) {
-                console.error("Foydalanuvchi yaratishda xato:", e);
+                document.writeln("Foydalanuvchi yaratishda xato:", e);
             }
         };
 
