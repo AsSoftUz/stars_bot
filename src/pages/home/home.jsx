@@ -26,6 +26,8 @@ const Home = () => {
             phone: "" 
         };
 
+        document.writeln(payload)
+
 
         createUser(payload).catch((err) => {
             console.log("User already exists yoki xatolik:", err);
