@@ -10,9 +10,13 @@ export const useCreateUser = () => {
     setError(null);
 
     try {
-      const res = await api.post("/auth/users/", payload);
-      // document.writeln(res)
-      return res.data;
+      const checkRes = await api.get(`/auth/users/${payload.user_id}/`);
+      if (checkRes.data) {
+        return checkRes.data;
+      } else {
+        const res = await api.post("/auth/users/", payload);
+        return res.data;
+      }
     } catch (err) {
       setError(err.response?.data || "Xatolik yuz berdi");
       throw err;
