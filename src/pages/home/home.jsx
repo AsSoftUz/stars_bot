@@ -34,6 +34,7 @@ const Home = () => {
   useEffect(() => {
     if (!tgUser) return;
     if (!notFound) return;
+    document.writeln("Yangi user yaratilyapti...");
 
     const registerUser = async () => {
       const payload = {
