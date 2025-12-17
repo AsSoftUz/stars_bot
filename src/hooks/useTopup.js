@@ -7,15 +7,17 @@ const useTopup = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
-    const submitTopup = async ({ amount, file }) => {
+    const submitTopup = async ({ user_id, amount, file }) => {
         setLoading(true);
         setError(null);
         setSuccess(false);
 
         try {
-            const formData = new FormData();
-            formData.append("amount", amount);
-            formData.append("receipt_image", file);
+            const formData = {
+                user_id: user_id,
+                amount: amount,
+                receipt_image: file,
+            };
 
             const res = await api.post("/invoices/invoices_create", formData, {
                 headers: {

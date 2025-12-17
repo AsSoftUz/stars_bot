@@ -9,6 +9,9 @@ const Topup = () => {
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
     const { submitTopup, loading, success } = useTopup();
+    const tg = window.Telegram.WebApp;
+    const userData = tg.initDataUnsafe?.user;
+    const user_id = userData?.id;
     const handleChange = (e) => {
         const value = e.target.value;
         setAmount(value);
@@ -27,7 +30,6 @@ const Topup = () => {
         if (+amount < 1000) return;
         console.log("Yuborildi:", amount);
     };
-
     return (
         <div className="topup">
             <nav>
@@ -47,7 +49,7 @@ const Topup = () => {
                     <div className="text">
                         <span>Chekni yuklash</span>
                     </div>
-                    <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" />
+                    <input type="file" name="file" id="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" />
                 </label>
 
 
