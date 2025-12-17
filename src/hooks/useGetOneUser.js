@@ -1,39 +1,41 @@
-// hooks/useGetOneUser.js
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
-const useGetOneUser = (userId) => {
-  const [data, setData] = useState(null);
+const useGetOrCreateUser = (tgUser) => {
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    if (!userId) return;
+    if (!tgUser) return;
 
-    const fetchUser = async () => {
+    const run = async () => {
       setLoading(true);
-      setError(null);
-      setNotFound(false);
-
       try {
-        const res = await api.get(`/auth/users/${userId}/`);
-        setData(res.data);
+        const res = await api.get(`/auth/users/${tgUser.id}/`);
+        setUser(res.data);
       } catch (err) {
         if (err.response?.status === 404) {
-          setNotFound(true);
+          const payload = {
+            user_id: tgUser.id,
+            fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`,
+            username: tgUser.username || null,
+            phone: "",
+          };
+
+          const createRes = await api.post("/auth/users/", payload);
+          setUser(createRes.data);
         } else {
-          setError(err);
+          console.error(err);
         }
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUser();
-  }, [userId]);
+    run();
+  }, [tgUser]);
 
-  return { data, loading, error, notFound };
+  return { user, loading };
 };
 
-export default useGetOneUser;
+export default useGetOrCreateUser;

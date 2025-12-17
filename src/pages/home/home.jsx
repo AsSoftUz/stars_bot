@@ -3,72 +3,36 @@ import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useCreateUser } from "../../hooks/useCreateUser";
-import useGetOneUser from "../../hooks/useGetOneUser";
+// import { useCreateUser } from "../../hooks/useCreateUser";
+// import useGetOneUser from "../../hooks/useGetOneUser";
+
+import useGetOrCreateUser from "../../hooks/useGetOrCreateUser";
 
 const Home = () => {
   const navigate = useNavigate();
   const [tgUser, setTgUser] = useState(null);
 
-  const { createUser } = useCreateUser();
+  const { user, loading } = useGetOrCreateUser(tgUser);
 
-  // 🔹 Telegram userni olish
   useEffect(() => {
     const tg = window.Telegram.WebApp;
     tg.expand();
 
     const userData = tg.initDataUnsafe?.user;
-    if (userData) {
-      setTgUser(userData);
-    }
+    if (userData) setTgUser(userData);
   }, []);
 
-  // 🔹 USERNI GET QILISH (HOOK FAQAT SHU YERDA!)
-  const {
-    data: dbUser,
-    loading,
-    notFound,
-  } = useGetOneUser(tgUser?.id);
+  if (!tgUser) return <h1>Saytni faqat Telegram orqali oching</h1>;
+  if (loading || !user) return <p>Yuklanmoqda...</p>;
 
-  // 🔹 AGAR 404 bo‘lsa → CREATE
-  useEffect(() => {
-    if (!tgUser) return;
-    if (!notFound) return;
-
-    const registerUser = async () => {
-      const payload = {
-        user_id: tgUser.id,
-        fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`,
-        username: tgUser.username || null,
-        phone: "",
-      };
-
-      try {
-        await createUser(payload);
-        console.log("✅ User yaratildi");
-      } catch (e) {
-        console.error("❌ User yaratishda xato", e);
-      }
-    };
-
-    registerUser();
-  }, [notFound, tgUser, createUser]);
-
-  if (!tgUser) {
-    return <h1>Saytni faqat Telegram orqali oching</h1>;
-  }
-
-  if (loading) {
-    return <p>Yuklanmoqda...</p>;
-  }
     return (
         <div className="home">
             {tgUser ? (
                 <div className="user-info">
                     <div className="name">
-                        <img src={user.photo_url} alt="Profile picture" />
+                        <img src={tgUser.photo_url} alt="Profile picture" />
                         <h1>
-                            {user.first_name}
+                            {user.fullname}
                             <p>@{user.username}</p>
                         </h1>
                     </div>
