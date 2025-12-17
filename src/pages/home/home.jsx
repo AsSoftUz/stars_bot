@@ -3,54 +3,64 @@ import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useCreateUser } from "../../hooks/useCreateUser"
-import useGetOneUser from "../hooks/useGetOneUser";
+import { useCreateUser } from "../../hooks/useCreateUser";
+import useGetOneUser from "../../hooks/useGetOneUser";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [tgUser, setTgUser] = useState(null);
 
-    const navigate = useNavigate();
-    const [user, setUser] = useState(null);
-    const { createUser, loading, error } = useCreateUser();
+  const { createUser } = useCreateUser();
 
-    useEffect(() => {
-        const tg = window.Telegram.WebApp;
-        tg.expand();
+  // 🔹 Telegram userni olish
+  useEffect(() => {
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-        const userData = tg.initDataUnsafe?.user;
+    const userData = tg.initDataUnsafe?.user;
+    if (userData) {
+      setTgUser(userData);
+    }
+  }, []);
 
-        if (!userData) {
-            setUser(null);
-            return;
-        }
+  // 🔹 USERNI GET QILISH (HOOK FAQAT SHU YERDA!)
+  const {
+    data: dbUser,
+    loading,
+    notFound,
+  } = useGetOneUser(tgUser?.id);
 
-        setUser(userData);
+  // 🔹 AGAR 404 bo‘lsa → CREATE
+  useEffect(() => {
+    if (!tgUser) return;
+    if (!notFound) return;
 
-        
-        const { data, isLoading, isError, exists } = useGetOneUser(userData.id);
+    const registerUser = async () => {
+      const payload = {
+        user_id: tgUser.id,
+        fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`,
+        username: tgUser.username || null,
+        phone: "",
+      };
 
-        if (isLoading) return <p>User bor</p>;
-        if (isError) return <p>User qo'shildi</p>;
+      try {
+        await createUser(payload);
+        console.log("✅ User yaratildi");
+      } catch (e) {
+        console.error("❌ User yaratishda xato", e);
+      }
+    };
 
-        const registerUser = async () => {
-            const payload = {
-                user_id: userData.id,
-                fullname: `${userData.first_name || ""} ${userData.last_name || ""}`,
-                username: userData.username || null,
-                phone: ""
-            };
+    registerUser();
+  }, [notFound, tgUser, createUser]);
 
-            try {
-                const newUser = await createUser(payload);
-                console.log("Foydalanuvchi DBga qo'shildi:", newUser);
-            } catch (e) {
-                console.log("Foydalanuvchi yaratishda xato:", e);
-            }
-        };
+  if (!tgUser) {
+    return <h1>Saytni faqat Telegram orqali oching</h1>;
+  }
 
-        registerUser();
-
-    }, []);
-
+  if (loading) {
+    return <p>Yuklanmoqda...</p>;
+  }
     return (
         <div className="home">
             {user ? (

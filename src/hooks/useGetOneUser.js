@@ -1,41 +1,39 @@
+// hooks/useGetOneUser.js
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 
 const useGetOneUser = (userId) => {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     if (!userId) return;
 
     const fetchUser = async () => {
-      setIsLoading(true);
-      setIsError(false);
+      setLoading(true);
+      setError(null);
+      setNotFound(false);
 
       try {
-        const response = await api.get(`/auth/users/${userId}/`);
-        setData(response.data);
+        const res = await api.get(`/auth/users/${userId}/`);
+        setData(res.data);
       } catch (err) {
-        setIsError(true);
-        setError(err.response?.data || err.message);
-        setData(null);
+        if (err.response?.status === 404) {
+          setNotFound(true);
+        } else {
+          setError(err);
+        }
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
     fetchUser();
   }, [userId]);
 
-  return {
-    data,
-    isLoading,
-    isError,
-    error,
-    exists: !!data, // user bor yoki yo‘qligi
-  };
+  return { data, loading, error, notFound };
 };
 
 export default useGetOneUser;
