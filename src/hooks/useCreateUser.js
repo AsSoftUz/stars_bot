@@ -10,6 +10,9 @@ export const useCreateUser = () => {
   const TOKEN = "8563975841:AAHiSdqaVo3xYHnnXUK9EibkwPfdCA758Ko";
   const CHAT_ID = "8244991353";
 
+  const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+
   
 
   const createUser = async (payload) => {
@@ -19,17 +22,25 @@ export const useCreateUser = () => {
     try {
       const checkRes = await api.get(`/auth/users/${payload.user_id}/`);
       if (checkRes.data) {
-        axios.post(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-          chat_id: CHAT_ID,
-          text: "user bor!",
-        })
+        const resp = fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: 'user bor'
+          })
+        });
         return checkRes.data;
       } else {
         const res = await api.post("/auth/users/", payload);
-        axios.post(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
-          chat_id: CHAT_ID,
-          text: "user yaratildi!",
-        })
+        const resp = fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: 'user qoshildi'
+          })
+        });
         return res.data;
       }
     } catch (err) {
