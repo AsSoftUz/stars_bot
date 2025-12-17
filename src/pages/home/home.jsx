@@ -64,7 +64,7 @@ const Home = () => {
   }
     return (
         <div className="home">
-            {user ? (
+            {tgUser ? (
                 <div className="user-info">
                     <div className="name">
                         <img src={user.photo_url} alt="Profile picture" />
