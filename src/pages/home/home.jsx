@@ -4,8 +4,16 @@ import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCreateUser } from "../../hooks/useCreateUser"
+import useGetOneUser from "../hooks/useGetOneUser";
 
 const Home = () => {
+
+    const { data, isLoading, isError, exists } = useGetOneUser(userId);
+
+    if (isLoading) return <p>User bor</p>;
+    if (isError) return <p>User qo'shildi</p>;
+
+
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const { createUser, loading, error } = useCreateUser();
