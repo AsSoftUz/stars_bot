@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useTopup from "../../hooks/useTopup";
 import "./topup.scss";
 
 const Topup = () => {
     const [amount, setAmount] = useState("");
     const [error, setError] = useState("");
+    const [file, setFile] = useState(null);
     const navigate = useNavigate();
+    const { submitTopup, loading, success } = useTopup();
     const handleChange = (e) => {
         const value = e.target.value;
         setAmount(value);
@@ -44,11 +47,11 @@ const Topup = () => {
                     <div className="text">
                         <span>Chekni yuklash</span>
                     </div>
-                    <input type="file" id="file" />
+                    <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" />
                 </label>
 
 
-                <button type="submit" disabled={!!error || !amount}>Jo'natish</button>
+                <button type="submit" disabled={loading || !!error || !amount || !file}>Jo'natish</button>
             </form>
         </div>
     )
