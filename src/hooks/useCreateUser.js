@@ -13,9 +13,11 @@ export const useCreateUser = () => {
       const checkRes = await api.get(`/auth/users/${payload.user_id}/`);
       if (checkRes.data) {
         return checkRes.data;
+        document.writeln("User already exists");
       } else {
         const res = await api.post("/auth/users/", payload);
         return res.data;
+        document.writeln("User created successfully");
       }
     } catch (err) {
       setError(err.response?.data || "Xatolik yuz berdi");
