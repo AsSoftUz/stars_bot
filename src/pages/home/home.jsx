@@ -8,12 +8,6 @@ import useGetOneUser from "../hooks/useGetOneUser";
 
 const Home = () => {
 
-    const { data, isLoading, isError, exists } = useGetOneUser(userId);
-
-    if (isLoading) return <p>User bor</p>;
-    if (isError) return <p>User qo'shildi</p>;
-
-
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     const { createUser, loading, error } = useCreateUser();
@@ -30,6 +24,12 @@ const Home = () => {
         }
 
         setUser(userData);
+
+        
+        const { data, isLoading, isError, exists } = useGetOneUser(userData.id);
+
+        if (isLoading) return <p>User bor</p>;
+        if (isError) return <p>User qo'shildi</p>;
 
         const registerUser = async () => {
             const payload = {
