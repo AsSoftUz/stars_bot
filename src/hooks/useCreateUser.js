@@ -5,6 +5,13 @@ export const useCreateUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // const axios = require("axios");
+
+  // const TOKEN = "BOT_TOKENINGIZ";
+  // const CHAT_ID = "CHAT_ID";
+
+  
+
   const createUser = async (payload) => {
     setLoading(true);
     setError(null);
@@ -12,10 +19,16 @@ export const useCreateUser = () => {
     try {
       const checkRes = await api.get(`/auth/users/${payload.user_id}/`);
       if (checkRes.data) {
-        return checkRes.data + "User already exists";
+        // axios.post(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+        //   chat_id: CHAT_ID,
+        //   text: "Salom Telegram!",
+        // })
+        document.writeln("User allaqachon mavjud");
+        return checkRes.data;
       } else {
         const res = await api.post("/auth/users/", payload);
-        return res.data + "User created successfully";
+        document.writeln("Yangi foydalanuvchi yaratildi");
+        return res.data;
       }
     } catch (err) {
       setError(err.response?.data || "Xatolik yuz berdi");
