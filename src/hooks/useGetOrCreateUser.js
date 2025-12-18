@@ -1,59 +1,71 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import api from "../api/axios";
 
 const useGetOrCreateUser = (tgUser) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true); // Default holatda true
+  const hasFetched = useRef(false); // Takroriy so'rovlarni oldini olish uchun
 
   useEffect(() => {
-    if (!tgUser) return;
+    // tgUser bo'lmasa so'rov yubormaymiz
+    if (!tgUser) {
+      setLoading(false);
+      return;
+    }
 
-    const run = async () => {
-      setLoading(true);
+    // Bir marta ishlashini ta'minlash
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
+    const syncUser = async () => {
       try {
-        // 1. Userni bazadan tekshiramiz
-        const res = await api.get(`/auth/users/${tgUser.id}/`);
-        const existingUser = res.data;
-
-        // 2. Telegramdan kelgan yangi ma'lumotlar
+        setLoading(true);
         const currentFullname = `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim();
         const currentUsername = tgUser.username || null;
 
-        // 3. Agar bazadagi ma'lumot Telegramdagidan farq qilsa, update qilamiz
-        if (
-          existingUser.fullname !== currentFullname ||
-          existingUser.username !== currentUsername
-        ) {
-          const updateRes = await api.patch(`/auth/users/${tgUser.id}/`, {
-            fullname: currentFullname,
-            username: currentUsername,
-          });
-          setUser(updateRes.data);
-        } else {
-          setUser(existingUser);
-        }
+        try {
+          // 1. Userni bazadan qidirish
+          const res = await api.get(`/auth/users/${tgUser.id}/`);
+          const existingUser = res.data;
 
-      } catch (err) {
-        if (err.response?.status === 404) {
-          // 4. User topilmasa, yangi yaratamiz
-          const payload = {
-            user_id: tgUser.id,
-            fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim(),
-            username: tgUser.username || null,
-            phone: "",
-          };
+          // 2. Ma'lumotlarni solishtirish
+          const isChanged = 
+            existingUser.fullname !== currentFullname || 
+            (existingUser.username || null) !== currentUsername;
 
-          const createRes = await api.post("/auth/users/", payload);
-          setUser(createRes.data);
-        } else {
-          console.error("Xatolik yuz berdi:", err);
+          if (isChanged) {
+            // 3. O'zgargan bo'lsa Update qilish
+            const updateRes = await api.patch(`/auth/users/${tgUser.id}/`, {
+              fullname: currentFullname,
+              username: currentUsername,
+            });
+            setUser(updateRes.data);
+          } else {
+            setUser(existingUser);
+          }
+        } catch (err) {
+          if (err.response?.status === 404) {
+            // 4. Bazada yo'q bo'lsa yaratish
+            const payload = {
+              user_id: tgUser.id,
+              fullname: currentFullname,
+              username: currentUsername,
+              phone: "", // Backend majburiy qilsa null emas bo'sh string yuboramiz
+            };
+            const createRes = await api.post("/auth/users/", payload);
+            setUser(createRes.data);
+          } else {
+            throw err; // Boshqa turdagi xatolarni catch'ga otish
+          }
         }
+      } catch (error) {
+        console.error("Auth Error:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    run();
+    syncUser();
   }, [tgUser]);
 
   return { user, loading };
