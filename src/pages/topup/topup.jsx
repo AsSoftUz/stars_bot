@@ -26,6 +26,10 @@ const Topup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!user_id) {
+            alert("Telegram ma'lumotlari yuklanmadi. Iltimos, ilovani qayta ishga tushiring.");
+            return;
+        }
         if (+amount < 1000 || !file) return;
 
         try {

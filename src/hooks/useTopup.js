@@ -15,9 +15,9 @@ const useTopup = () => {
         try {
             // Fayl yuborish uchun FormData ishlatamiz
             const formData = new FormData();
-            formData.append("user_id", user_id);
-            formData.append("amount", amount);
-            formData.append("receipt_image", file); // Schema'da receipt_image deb ko'rsatilgan
+            formData.append("user_id", String(user_id)); // Stringga o'tkazish xavfsizroq
+            formData.append("amount", String(amount));  // Schema string so'rayotgan bo'lishi mumkin
+            formData.append("receipt_image", file);     // Fayl obyekti
 
             const res = await api.post("/invoices/invoices_create", formData, {
                 headers: {
@@ -28,7 +28,10 @@ const useTopup = () => {
             setSuccess(true);
             return res.data;
         } catch (err) {
-            const message = err.response?.data?.message || "Topup yuborishda xatolik";
+            // Serverdan kelgan aniq xatolikni ko'rish:
+            const message = err.response?.data 
+                ? JSON.stringify(err.response.data) 
+                : err.message || "Noma'lum xatolik";
             setError(message);
             throw err;
         } finally {
