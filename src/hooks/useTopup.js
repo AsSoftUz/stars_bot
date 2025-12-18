@@ -13,11 +13,11 @@ const useTopup = () => {
         setSuccess(false);
 
         try {
-            const formData = {
-                user_id: user_id,
-                amount: amount,
-                receipt_image: file,
-            };
+            // Fayl yuborish uchun FormData ishlatamiz
+            const formData = new FormData();
+            formData.append("user_id", user_id);
+            formData.append("amount", amount);
+            formData.append("receipt_image", file); // Schema'da receipt_image deb ko'rsatilgan
 
             const res = await api.post("/invoices/invoices_create", formData, {
                 headers: {
@@ -27,10 +27,8 @@ const useTopup = () => {
 
             setSuccess(true);
             return res.data;
-
         } catch (err) {
-            const message =
-                err.response?.data?.message || "Topup yuborishda xatolik";
+            const message = err.response?.data?.message || "Topup yuborishda xatolik";
             setError(message);
             throw err;
         } finally {
@@ -38,12 +36,7 @@ const useTopup = () => {
         }
     };
 
-    return {
-        submitTopup,
-        loading,
-        error,
-        success,
-    };
+    return { submitTopup, loading, error, success };
 };
 
 export default useTopup;

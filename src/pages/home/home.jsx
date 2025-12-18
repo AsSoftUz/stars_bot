@@ -1,4 +1,4 @@
-import "./home.css";
+import "./home.scss";
 import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ const Home = () => {
   }, []);
 
   if (!tgUser) return <h1>Saytni faqat Telegram orqali oching</h1>;
-  if (loading || !user) return;
+  if (loading || !user) return <p>Loading...</p>;
 
     return (
         <div className="home">

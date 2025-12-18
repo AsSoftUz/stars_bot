@@ -1,8 +1,8 @@
-import "./premium.css"
+import "./premium.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Stars = () => {
+const Premium = () => {
 
     const navigate = useNavigate();
     const [selected, setSelected] = useState("1m");
@@ -88,4 +88,4 @@ const Stars = () => {
         </div>
     )
 }
-export default Stars;
+export default Premium;

@@ -1,4 +1,4 @@
-import './orders.css'
+import './orders.scss'
 import { useNavigate } from 'react-router-dom';
 
 const Stars = () => {
