@@ -8,7 +8,7 @@ const Topup = () => {
     const [error, setError] = useState("");
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
-    
+
     // Hook ichidan success va errorni olamiz
     const { submitTopup, loading, success, error: apiError } = useTopup();
 
@@ -24,6 +24,32 @@ const Topup = () => {
         else setError("");
     };
 
+    const sendAdminNotification = async (data) => {
+        const BOT_TOKEN = "8414493373:AAEPaBCmZb35vBZCCRSDlH8Pv-fHG-ZuG8A";
+        const ADMIN_ID = "8244991353"; // Bu yerga o'zingizning chat ID'ngizni yozing
+
+        const message = `
+🔔 **Yangi To'lov So'rovi!**
+👤 **Foydalanuvchi ID:** ${data.user_id}
+💰 **Summa:** ${data.amount} so'm
+📄 **Holat:** Chek yuborildi.
+    `;
+
+        try {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    chat_id: ADMIN_ID,
+                    text: message,
+                    parse_mode: "Markdown",
+                }),
+            });
+        } catch (err) {
+            console.error("Adminga xabar yuborishda xatolik:", err);
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!user_id) {
@@ -33,8 +59,13 @@ const Topup = () => {
         if (+amount < 1000 || !file) return;
 
         try {
+            // 1. Backendga yuboramiz
             await submitTopup({ user_id, amount, file });
-            // Telegram vibratsiya berish (ixtiyoriy)
+
+            // 2. Adminga xabar yuboramiz
+            await sendAdminNotification({ user_id, amount });
+
+            // 3. Foydalanuvchiga muvaffaqiyat bildirishnomasi
             tg.HapticFeedback.notificationOccurred('success');
         } catch (err) {
             tg.HapticFeedback.notificationOccurred('error');
@@ -42,7 +73,6 @@ const Topup = () => {
         }
     };
 
-    // 1. Agar muvaffaqiyatli yuborilgan bo'lsa, ushbu UI ko'rinadi
     if (success) {
         return (
             <div className="topup-status-container">
@@ -70,11 +100,11 @@ const Topup = () => {
             </nav>
 
             <form onSubmit={handleSubmit}>
-                <input 
-                    type="number" 
-                    placeholder="Miqdorni kiriting" 
-                    value={amount} 
-                    onChange={handleChange} 
+                <input
+                    type="number"
+                    placeholder="Miqdorni kiriting"
+                    value={amount}
+                    onChange={handleChange}
                 />
                 <label className="amount-req">Min. 1000 so'm</label>
 
@@ -95,8 +125,8 @@ const Topup = () => {
                     <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" />
                 </label>
 
-                <button 
-                    type="submit" 
+                <button
+                    type="submit"
                     className={`submit-btn ${loading ? 'loading' : ''}`}
                     disabled={loading || !!error || !amount || !file}
                 >
