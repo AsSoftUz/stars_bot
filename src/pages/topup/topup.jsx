@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTopup from "../../hooks/useTopup";
+import ccard from "../../assets/card.jpg";
 import "./topup.scss";
 
 const Topup = () => {
@@ -59,15 +60,16 @@ const Topup = () => {
     return (
         <div className="topup">
             <nav>
-                <button onClick={() => navigate("/")} className="back-btn">
+                {/* <button onClick={() => navigate("/")} className="back-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>
-                </button>
+                </button> */}
                 <div className="left">
                     <h2>Hisobni to'ldirish</h2>
                 </div>
             </nav>
 
             <form onSubmit={handleSubmit}>
+                <img src={ccard} alt="rasm" width="100%" />
                 <input 
                     type="number" 
                     placeholder="Miqdorni kiriting" 
