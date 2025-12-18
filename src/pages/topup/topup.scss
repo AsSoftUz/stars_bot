@@ -46,6 +46,17 @@
             &::placeholder {
                 color: var(--inactive);
             }
+            
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            input[type=number] {
+                -moz-appearance: textfield;
+                appearance: textfield;
+            }
         }
         .amount-req {
             align-self: flex-start;
@@ -92,9 +103,9 @@
             color: rgba(75, 85, 99, 1);
         }
 
-        // .custum-file-upload input {
-        //     display: none;
-        // }
+        .custum-file-upload input {
+            display: none;
+        }
         button {
             width: 90%;
             padding: 14px 24px;
