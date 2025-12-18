@@ -121,5 +121,53 @@
             opacity: 0.5;
             cursor: not-allowed;
         }
+        .error-message {
+            background-color: rgba(255, 0, 0, 0.1);
+            color: #ff4d4d;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #ff4d4d;
+        }
+
+        .topup-status-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            padding: 20px;
+            
+            .status-card {
+                text-align: center;
+                background: #1a1a1a; // Dizayningizga mos rang
+                padding: 30px;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+                .status-icon {
+                    font-size: 50px;
+                    margin-bottom: 20px;
+                }
+
+                h2 { color: #fff; margin-bottom: 10px; }
+                p { color: #aaa; margin-bottom: 25px; }
+
+                .back-home-btn {
+                    background: #0088cc;
+                    color: white;
+                    border: none;
+                    padding: 12px 25px;
+                    border-radius: 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .submit-btn.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
     }
 }
