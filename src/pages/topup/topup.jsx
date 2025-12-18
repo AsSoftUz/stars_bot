@@ -2,15 +2,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTopup from "../../hooks/useTopup";
 import ccard from "../../assets/card.jpg";
-import useTelegramBack from "../hooks/useTelegramBack";
+import useTelegramBack from "../../hooks/useTelegramBack";
 import "./topup.scss";
 
 const Topup = () => {
+    useTelegramBack("/");
     const [amount, setAmount] = useState("");
     const [error, setError] = useState("");
     const [file, setFile] = useState(null);
     const navigate = useNavigate();
-    useTelegramBack("/");
     
     // Hook ichidan success va errorni olamiz
     const { submitTopup, loading, success, error: apiError } = useTopup();
