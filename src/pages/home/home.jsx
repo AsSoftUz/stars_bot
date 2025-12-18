@@ -21,7 +21,7 @@ const Home = () => {
   }, []);
 
   if (!tgUser) return <h1>Saytni faqat Telegram orqali oching</h1>;
-  if (loading || !user) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>;
 
     return (
         <div className="home">
