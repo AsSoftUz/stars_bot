@@ -19,7 +19,7 @@ const useTopup = () => {
             formData.append("amount", String(amount));  // Schema string so'rayotgan bo'lishi mumkin
             formData.append("receipt_image", file);     // Fayl obyekti
 
-            const res = await api.post("/invoices/invoices_create", formData, {
+            const res = await api.post("/invoices/", formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                 },
