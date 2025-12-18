@@ -50,7 +50,7 @@ const Home = () => {
           <img src={tgUser.photo_url || "https://via.placeholder.com/50"} alt="Profile" />
           <h1>
             {user.fullname}
-            <p>@{user.username || "username_yoq"}</p>
+            {user.username && <p>@{user.username}</p>}
           </h1>
         </div>
       </div>
