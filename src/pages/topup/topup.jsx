@@ -47,8 +47,8 @@ const Topup = () => {
                 <div className="status-card success">
                     <div className="status-icon">✅</div>
                     <h2>So'rov yuborildi!</h2>
-                    <p>To'lovingiz tekshirilmoqda. Tez orada hisobingizga tushadi.</p>
-                    <button onClick={() => navigate("/")} className="back-home-btn">
+                    <p>To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.</p>
+                    <button onClick={() => navigate("/")} className="submit-btn">
                         Asosiy sahifaga qaytish
                     </button>
                 </div>
@@ -72,16 +72,14 @@ const Topup = () => {
                     type="number" 
                     placeholder="Miqdorni kiriting" 
                     value={amount} 
-                    onChange={handleChange} 
+                    onChange={handleChange}
+                    min={1000}
                 />
-                <label className="amount-req">Min. 1000 so'm</label>
-
-                {/* 2. Xatolik xabarlarini ko'rsatish */}
-                {(error || apiError) && (
-                    <div className="error-message">
+                <label className="amount-req">Min. 1000 so'm{(error || apiError) && (
+                    <p>
                         ⚠️ {error || apiError}
-                    </div>
-                )}
+                    </p>
+                )}</label>
 
                 <label className="custum-file-upload" htmlFor="file">
                     <div className="icon">
