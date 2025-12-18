@@ -31,7 +31,7 @@ const Home = () => {
                         <img src={tgUser.photo_url} alt="Profile picture" />
                         <h1>
                             {user.fullname}
-                            <p>@{user.username}</p>
+                            <p>@{user.username || "No username"}</p>
                         </h1>
                     </div>
                 </div>
