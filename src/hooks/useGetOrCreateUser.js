@@ -8,49 +8,50 @@ const useGetOrCreateUser = (tgUser) => {
   useEffect(() => {
     if (!tgUser) return;
 
-    // useGetOrCreateUser.js ichida
-const run = async () => {
-  setLoading(true);
-  try {
-    const res = await api.get(`/auth/users/${tgUser.id}/`);
-    const existingUser = res.data;
+    const run = async () => {
+      setLoading(true);
+      try {
+        // 1. Userni bazadan tekshiramiz
+        const res = await api.get(`/auth/users/${tgUser.id}/`);
+        const existingUser = res.data;
 
-    const currentFullname = `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim();
-    const currentUsername = tgUser.username || null;
+        // 2. Telegramdan kelgan yangi ma'lumotlar
+        const currentFullname = `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim();
+        const currentUsername = tgUser.username || null;
 
-    // Username null bo'lsa ham solishtirish uchun:
-    const hasNameChanged = existingUser.fullname !== currentFullname;
-    const hasUsernameChanged = (existingUser.username || null) !== currentUsername;
+        // 3. Agar bazadagi ma'lumot Telegramdagidan farq qilsa, update qilamiz
+        if (
+          existingUser.fullname !== currentFullname ||
+          existingUser.username !== currentUsername
+        ) {
+          const updateRes = await api.patch(`/auth/users/${tgUser.id}/`, {
+            fullname: currentFullname,
+            username: currentUsername,
+          });
+          setUser(updateRes.data);
+        } else {
+          setUser(existingUser);
+        }
 
-    if (hasNameChanged || hasUsernameChanged) {
-      const updateRes = await api.patch(`/auth/users/${tgUser.id}/`, {
-        fullname: currentFullname,
-        username: currentUsername,
-      });
-      setUser(updateRes.data);
-    } else {
-      setUser(existingUser);
-    }
-  } catch (err) {
-    if (err.response?.status === 404) {
-      // Yangi yaratish qismi...
-      const payload = {
-        user_id: tgUser.id,
-        fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim(),
-        username: tgUser.username || null,
-        phone: "",
-      };
-      const createRes = await api.post("/auth/users/", payload);
-      setUser(createRes.data);
-    } else {
-      console.error(err);
-      // Xatolik bo'lsa ham loadingdan chiqarish uchun:
-      setUser(null); 
-    }
-  } finally {
-    setLoading(false);
-  }
-};
+      } catch (err) {
+        if (err.response?.status === 404) {
+          // 4. User topilmasa, yangi yaratamiz
+          const payload = {
+            user_id: tgUser.id,
+            fullname: `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim(),
+            username: tgUser.username || null,
+            phone: "",
+          };
+
+          const createRes = await api.post("/auth/users/", payload);
+          setUser(createRes.data);
+        } else {
+          console.error("Xatolik yuz berdi:", err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
     run();
   }, [tgUser]);
