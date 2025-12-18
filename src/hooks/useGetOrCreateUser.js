@@ -3,38 +3,37 @@ import api from "../api/axios";
 
 const useGetOrCreateUser = (tgUser) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Default holatda true
-  const hasFetched = useRef(false); // Takroriy so'rovlarni oldini olish uchun
+  const [loading, setLoading] = useState(true);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
-    // tgUser bo'lmasa so'rov yubormaymiz
     if (!tgUser) {
       setLoading(false);
       return;
     }
 
-    // Bir marta ishlashini ta'minlash
     if (hasFetched.current) return;
     hasFetched.current = true;
 
     const syncUser = async () => {
       try {
         setLoading(true);
-        const currentFullname = `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim();
-        const currentUsername = tgUser.username || null;
+        
+        // Ism va username tayyorlash (null o'rniga bo'sh string)
+        const currentFullname = `${tgUser.first_name || ""} ${tgUser.last_name || ""}`.trim() || "User";
+        const currentUsername = tgUser.username || ""; 
 
         try {
-          // 1. Userni bazadan qidirish
+          // 1. Tekshirish
           const res = await api.get(`/auth/users/${tgUser.id}/`);
           const existingUser = res.data;
 
-          // 2. Ma'lumotlarni solishtirish
           const isChanged = 
             existingUser.fullname !== currentFullname || 
-            (existingUser.username || null) !== currentUsername;
+            (existingUser.username || "") !== currentUsername;
 
           if (isChanged) {
-            // 3. O'zgargan bo'lsa Update qilish
+            // 2. Yangilash (PATCH)
             const updateRes = await api.patch(`/auth/users/${tgUser.id}/`, {
               fullname: currentFullname,
               username: currentUsername,
@@ -45,21 +44,22 @@ const useGetOrCreateUser = (tgUser) => {
           }
         } catch (err) {
           if (err.response?.status === 404) {
-            // 4. Bazada yo'q bo'lsa yaratish
+            // 3. Yaratish (POST)
             const payload = {
               user_id: tgUser.id,
               fullname: currentFullname,
               username: currentUsername,
-              phone: "", // Backend majburiy qilsa null emas bo'sh string yuboramiz
+              phone: "", 
             };
             const createRes = await api.post("/auth/users/", payload);
             setUser(createRes.data);
           } else {
-            throw err; // Boshqa turdagi xatolarni catch'ga otish
+            console.error("API Error details:", err.response?.data);
+            throw err; 
           }
         }
       } catch (error) {
-        console.error("Auth Error:", error);
+        console.error("Global Auth Error:", error);
       } finally {
         setLoading(false);
       }

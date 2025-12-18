@@ -43,7 +43,6 @@ const Home = () => {
   if (!user) {
     return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
   }
-
   return (
     <div className="home">
       <div className="user-info">
