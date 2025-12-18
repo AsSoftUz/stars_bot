@@ -1,7 +1,9 @@
 import './orders.scss'
 import { useNavigate } from 'react-router-dom';
+import useTelegramBack from "../../hooks/useTelegramBack";
 
 const Stars = () => {
+    useTelegramBack("/");
 
     const navigate = useNavigate();
 

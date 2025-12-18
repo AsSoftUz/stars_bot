@@ -1,9 +1,11 @@
-import "./tranzaction.css"
+import "./tranzaction.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import useTelegramBack from "../../hooks/useTelegramBack";
 
 const Tranzaction = () => {
 
+    useTelegramBack("/");
     const navigate = useNavigate();
     
     const [selected, setSelected] = useState("payme");
@@ -11,7 +13,7 @@ const Tranzaction = () => {
     return (
         <div className="tranzaction">
             <nav>
-                <button onClick={() => navigate("/")} className="back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg></button>
+                {/* <button onClick={() => navigate("/")} className="back-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg></button> */}
                 <div className="left">
                     <h2>Checkout</h2>
                 </div>
