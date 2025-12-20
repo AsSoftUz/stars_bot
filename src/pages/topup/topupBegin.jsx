@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTelegramBack from "../../hooks/useTelegramBack";
+import "./topup.scss";
 
 const TopUpBegin = () => {
     useTelegramBack("/");

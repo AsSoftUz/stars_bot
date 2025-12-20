@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // useLocation qo'shildi
 import useTopup from "../../hooks/useTopup";
+import "./topup.scss";
 import ccard from "../../assets/card.jpg";
 
 const Topup = () => {
