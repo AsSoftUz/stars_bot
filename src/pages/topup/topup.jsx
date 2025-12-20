@@ -72,6 +72,7 @@ const Topup = () => {
 
             <form onSubmit={handleSubmit}>
                 <img src={ccard} alt="rasm" width="100%" />
+                <p>Tepadagi kartaga pul tashlab chekni rasmga olib bu yerga yuboring!</p>
                 <input 
                     type="number" 
                     placeholder="Miqdorni kiriting" 
