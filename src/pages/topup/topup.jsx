@@ -35,7 +35,7 @@ const Topup = () => {
         }
 
         if (!file) {
-            alert("Iltimos, chek rasmiga yuklang!");
+            // alert("Iltimos, chek rasmiga yuklang!");
             return;
         }
 
