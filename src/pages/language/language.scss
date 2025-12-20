@@ -62,9 +62,9 @@ $tg-hover: #2b3d4f;
     position: relative;
     z-index: 1;
 
-    .language-switcher__trigger:hover & {
-      transform: rotate(15deg);
-    }
+    // .language-switcher__trigger:hover & {
+    //   transform: rotate(15deg);
+    // }
 
     .language-switcher__trigger--active & {
       color: $tg-accent;
