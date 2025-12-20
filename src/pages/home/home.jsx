@@ -1,7 +1,7 @@
 import "./home.scss";
 import { useEffect, useState } from "react";
-import PremiumImg1 from "../../assets/premium.jpg";
-import PremiumImg from "../../assets/stars.png";
+import PremiumImg1 from "../../assets/premium.webp";
+import PremiumImg from "../../assets/stars.webp";
 import { useNavigate } from "react-router-dom";
 import useGetOrCreateUser from "../../hooks/useGetOrCreateUser";
 import Language from "../language/language";
