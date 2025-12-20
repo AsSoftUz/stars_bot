@@ -1,27 +1,35 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom"; // useLocation qo'shildi
+import useTopup from "../../hooks/useTopup";
+import ccard from "../../assets/card.jpg";
 
 const Topup = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { amount } = location.state || {}; // Birinchi sahifadan kelgan summa
-    
+
     const [file, setFile] = useState(null);
     const { submitTopup, loading, success, error: apiError } = useTopup();
 
     const tg = window.Telegram.WebApp;
     const user_id = tg.initDataUnsafe?.user?.id;
 
-    // Agar foydalanuvchi to'g'ridan-to'g'ri shu sahifaga kirsa (summasiz)
-    if (!amount) {
-        return <button onClick={() => navigate("/topupbegin")}>Oldin summani kiriting</button>;
-    }
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!file) return;
+        
+        if (!amount) {
+            alert("Summa topilmadi, iltimos qaytadan kiriting.");
+            navigate("/topupbegin");
+            return;
+        }
+
+        if (!file) {
+            alert("Iltimos, chek rasmiga yuklang!");
+            return;
+        }
 
         try {
-            // Endi barcha ma'lumotlar bor: user_id, amount va file
+            // Endi user_id, amount va file barchasi API'ga bitta FormData'da ketadi
             await submitTopup({ user_id, amount, file });
             tg.HapticFeedback.notificationOccurred('success');
         } catch (err) {
@@ -32,8 +40,8 @@ const Topup = () => {
     if (success) {
         return (
             <div className="status-card success">
-                <h2>So'rov yuborildi!</h2>
-                <button onClick={() => navigate("/")}>Bosh sahifa</button>
+                <h2>✅ So'rov yuborildi!</h2>
+                <button onClick={() => navigate("/")}>Asosiy sahifa</button>
             </div>
         );
     }
@@ -41,19 +49,26 @@ const Topup = () => {
     return (
         <div className="topup">
             <form onSubmit={handleSubmit}>
-                <p>Tanlangan summa: <b>{amount} so'm</b></p>
+                <p>To'lov summasi: <b>{amount} so'm</b></p>
                 <img src={ccard} alt="card" width="100%" />
-                
                 <label className="custum-file-upload" htmlFor="file">
-                    <span>{file ? file.name : "Chekni yuklash"}</span>
-                    <input type="file" id="file" onChange={(e) => setFile(e.target.files[0])} accept="image/*" />
+                    <div className="text">
+                        <span>{file ? file.name : "Chekni yuklash"}</span>
+                    </div>
+                    <input 
+                        type="file" 
+                        id="file" 
+                        onChange={(e) => setFile(e.target.files[0])} 
+                        accept="image/*" 
+                    />
                 </label>
 
-                <button type="submit" disabled={loading || !file} className="submit-btn">
+                <button type="submit" className="submit-btn" disabled={loading || !file}>
                     {loading ? "Yuborilmoqda..." : "Tasdiqlash va jo'natish"}
                 </button>
-                {apiError && <p className="error">{apiError}</p>}
+                {apiError && <p className="error-msg">⚠️ {apiError}</p>}
             </form>
         </div>
     );
 };
+export default Topup;

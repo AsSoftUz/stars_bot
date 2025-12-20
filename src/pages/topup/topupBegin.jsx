@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useTopup from "../../hooks/useTopup";
 import useTelegramBack from "../../hooks/useTelegramBack";
-import "./topup.scss";
+
 const TopUpBegin = () => {
     useTelegramBack("/");
     const [amount, setAmount] = useState("");
@@ -11,16 +10,17 @@ const TopUpBegin = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (+amount < 1000) {
+        if (!amount || +amount < 1000) {
             setError("Minimal summa 1000 so'm");
             return;
         }
-        // Summani state orqali keyingi sahifaga uzatamiz
-        navigate("/topup", { state: { amount } }); 
+        // DIQQAT: API'ga yubormaymiz, faqat keyingi sahifaga summani uzatamiz
+        navigate("/topup", { state: { amount: amount } });
     };
 
     return (
         <div className="topup">
+            <h2>Hisobni to'ldirish</h2>
             <form onSubmit={handleSubmit}>
                 <input 
                     type="number" 
@@ -28,13 +28,12 @@ const TopUpBegin = () => {
                     value={amount} 
                     onChange={(e) => setAmount(e.target.value)}
                 />
-                {error && <p style={{color: 'red'}}>{error}</p>}
+                {error && <p className="error-msg">⚠️ {error}</p>}
                 <button type="submit" className="submit-btn" disabled={!amount}>
-                    Keyingi qadam (Rasm yuklash)
+                    Keyingi qadam
                 </button>
             </form>
         </div>
     );
 };
-
 export default TopUpBegin;
