@@ -51,35 +51,79 @@
             line-height: 22px;
         }
     }
-    .star-cards {
-        display: grid;
+    
+    .plans {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         gap: 16px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        .card {
+        margin-top: 24px;
+        input {
+            accent-color: #ff0d00;
+        }
+        h3 {
+            color: rgb(156 163 175);
+        }
+        .plan {
+            border: 1px solid #333;
             padding: 16px;
-            border-radius: 24px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 16px;
+            transition: 0.2s;
+            input {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        .plan.active {
+            border-color: #ffffff;
+            background-image: linear-gradient(to right, #facc15, #f97316);
+            --tw-shadow: 0 0 30px rgba(240, 251, 36, 0.33);
+            box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+            scale: 1.01;
+            .price {
+                color: rgb(255, 255, 255);
+            }
+        }
+        .contents {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             .top {
                 display: flex;
                 align-items: center;
-                gap: 8px;
-                margin: 8px 0 16px 0;
+                gap: 16px;
                 h3 {
-                    font-size: 24px;
+                    color: white;
+                    line-height: 28px;
                 }
             }
-            button {
-                width: 100%;
-                padding: 14px 24px;
-                border-radius: 12px;
-                color: white;
-                cursor: pointer;
-                font-size: 14px;
+            .price {
+                font-size: 18px;
                 font-weight: 700;
-                &:hover {
-                    transition: 0.2s;
-                    background: rgba(255, 255, 255, 0.15);
-                }
             }
+        }
+        .buy-btn {
+            margin-top: 24px;
+            width: 100%;
+            padding: 14px 0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #000;
+            font-weight: 700;
+            border: none;
+            gap: 8px;
+            cursor: pointer;
+            background-image: linear-gradient(to bottom right, #facc15, #f97316);
+            --tw-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+            box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
         }
     }
 }
