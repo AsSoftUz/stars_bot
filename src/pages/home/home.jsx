@@ -59,6 +59,7 @@ const Home = () => {
             {user.username && <p>@{user.username}</p>}
           </h1>
         </div>
+        <Language/>
       </div>
 
       <div className="total-balance glass-card">
