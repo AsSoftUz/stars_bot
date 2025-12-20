@@ -1,0 +1,166 @@
+$tg-bg: #17212b;
+$tg-secondary: #232e3c;
+$tg-accent: #5288c1;
+$tg-text: #ffffff;
+$tg-text-secondary: #8b9caa;
+$tg-border: #344350;
+$tg-hover: #2b3d4f;
+
+.language-switcher {
+  position: relative;
+  display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  &__trigger {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: $tg-secondary;
+    border: 2px solid $tg-border;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba($tg-accent, 0.2) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover {
+      border-color: $tg-accent;
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px rgba($tg-accent, 0.3);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+
+    &--active {
+      border-color: $tg-accent;
+      background: linear-gradient(135deg, $tg-secondary 0%, darken($tg-secondary, 5%) 100%);
+    }
+  }
+
+  &__globe {
+    width: 24px;
+    height: 24px;
+    color: $tg-text;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 1;
+
+    .language-switcher__trigger:hover & {
+      transform: rotate(15deg);
+    }
+
+    .language-switcher__trigger--active & {
+      color: $tg-accent;
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 180px;
+    background: $tg-secondary;
+    border: 1px solid $tg-border;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) scale(0.95);
+    transform-origin: top right;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+
+    &--open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    color: $tg-text;
+
+    &:hover {
+      background: $tg-hover;
+    }
+
+    &--selected {
+      background: rgba($tg-accent, 0.15);
+      color: $tg-accent;
+
+      &:hover {
+        background: rgba($tg-accent, 0.2);
+      }
+    }
+  }
+
+  &__flag {
+    width: 24px;
+    height: 18px;
+    border-radius: 3px;
+    object-fit: cover;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  &__flag-emoji {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    flex: 1;
+  }
+
+  &__check {
+    width: 16px;
+    height: 16px;
+    color: $tg-accent;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease;
+
+    .language-switcher__item--selected & {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+// Overlay for closing dropdown when clicking outside
+.language-switcher__overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}

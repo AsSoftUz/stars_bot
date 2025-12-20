@@ -1,9 +1,10 @@
 import "./home.scss";
+import { useEffect, useState } from "react";
 import PremiumImg1 from "../../assets/premium.jpg";
 import PremiumImg from "../../assets/stars.png";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import useGetOrCreateUser from "../../hooks/useGetOrCreateUser";
+import Language from "../language/language";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ const Home = () => {
             {user.username && <p>@{user.username}</p>}
           </h1>
         </div>
+        <Language />
       </div>
 
       <div className="total-balance glass-card">
