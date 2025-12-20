@@ -46,26 +46,32 @@ const Home = () => {
   }
 
   // 3-bosqich: Agar xatolik tufayli user baribir kelmasa
-  if (!user) {
-    return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
-  }
+  // if (!user) {
+  //   return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
+  // }
   return (
     <div className="home">
-      <div className="user-info">
-        <div className="name">
-          <img src={tgUser.photo_url || "https://via.placeholder.com/50"} alt="Profile" />
-          <h1>
-            {user.fullname}
-            {user.username && <p>@{user.username}</p>}
-          </h1>
+      {tgUser ? (
+        <div className="user-info">
+          <div className="name">
+            <img src={tgUser.photo_url || "https://via.placeholder.com/50"} alt="Profile" />
+            <h1>
+              {user.fullname}
+              {user.username && <p>@{user.username}</p>}
+            </h1>
+          </div>
+          <Language/>
         </div>
-        <Language/>
-      </div>
+      ) : (
+        <div className="user-info">
+          <h1>Saytni faqat Telegram orqali oching</h1>
+        </div>
+      )}
 
       <div className="total-balance glass-card">
         <p>Total balance</p>
-        {/* <h1>{user.balance || 0} UZS</h1> */}
-        <h1>{Number(user.balance).toLocaleString('ru-RU').replace(/,/g, ' ')} UZS</h1>
+        {tgUser ? (<h1>{Number(user.balance).toLocaleString('ru-RU').replace(/,/g, ' ')} UZS</h1>) : (<h1>0 UZS</h1>)}
+        {/* <h1>{Number(user.balance).toLocaleString('ru-RU').replace(/,/g, ' ')} UZS</h1> */}
         <button onClick={() => navigate("/topup")} className="neon-glow">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path><path d="M20 2v4"></path><path d="M22 4h-4"></path><circle cx="4" cy="20" r="2"></circle></svg>
           Top up balance
