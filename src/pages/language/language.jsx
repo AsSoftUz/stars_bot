@@ -3,7 +3,7 @@ import './language.scss';
 
 const languages = [
   { code: 'uz', name: "O'zbekcha", flag: '🇺🇿' },
-  { code: 'en', name: 'English', flag: 'en' },
+  { code: 'en', name: 'English', flag: 'gb' },
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ];
 

@@ -58,7 +58,7 @@ const Topup = () => {
             <div className="topup-status-container">
                 <div className="status-card success">
                     <div className="status-icon">
-                        <img src={tick} alt="" width="24px" />
+                        <img src={tick} alt="" width="48px" />
                     </div>
                     <h2>So'rov yuborildi!</h2>
                     <p>To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.</p>
