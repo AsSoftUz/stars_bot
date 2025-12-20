@@ -25,7 +25,7 @@ const TopUpBegin = () => {
             <form onSubmit={handleSubmit}>
                 <input 
                     type="number" 
-                    placeholder="Miqdorni kiriting" 
+                    placeholder="Minimal 1000 so'm" 
                     value={amount} 
                     onChange={(e) => setAmount(e.target.value)}
                 />
