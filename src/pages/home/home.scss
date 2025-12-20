@@ -178,7 +178,7 @@ button:active {
                 justify-content: center;
                 align-items: center;
                 overflow: hidden;
-                border: 1.5px solid rgb(255 255 255 / 0.1);;
+                filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.2));
             }
             // .bg {
             //     background-image: linear-gradient(to bottom right, #a855f7, #db2777);
