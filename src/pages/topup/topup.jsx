@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useTopup from "../../hooks/useTopup";
+import tick from "../../assets/tick.gif";
 import "./topup.scss";
 import ccard from "../../assets/card.jpg";
 
@@ -56,7 +57,9 @@ const Topup = () => {
         return (
             <div className="topup-status-container">
                 <div className="status-card success">
-                    <div className="status-icon">✅</div>
+                    <div className="status-icon">
+                        <img src={tick} alt="" width="24px" />
+                    </div>
                     <h2>So'rov yuborildi!</h2>
                     <p>To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.</p>
                     <button onClick={() => navigate("/")} className="submit-btn">
