@@ -175,8 +175,8 @@ button:active {
                 background-image: linear-gradient(to bottom right, rgb(88 28 135 / 0.4) , rgb(15 23 42 / 0.4));
             }
             .addition-image {
-                width: 40px;
-                height: 40px;
+                width: 45px;
+                height: 45px;
                 border-radius: 50%;
                 display: flex;
                 justify-content: center;
@@ -189,10 +189,6 @@ button:active {
             }
             h3 {
                 line-height: 28px;
-            }
-            p {
-                font-size: 12px;
-                color: var(--inactive);
             }
         }
     }

@@ -77,13 +77,13 @@ const Home = () => {
           <div className="addition-image">
             <img src={PremiumImg} alt="Stars" width="42" height="42" />
           </div>
-          <h3>Stars</h3>
+          <h2>Stars</h2>
         </button>
         <button onClick={() => navigate("/premium")} className="premium glass-card">
           <div className="addition-image bg">
             <img src={PremiumImg1} alt="Premium" width="38" height="38" />
           </div>
-          <h3>Premium</h3>
+          <h2>Premium</h2>
         </button>
       </div>
 
