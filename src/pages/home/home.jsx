@@ -78,14 +78,12 @@ const Home = () => {
             <img src={PremiumImg} alt="Stars" width="42" height="42" />
           </div>
           <h3>Stars</h3>
-          <p>Get stars</p>
         </button>
         <button onClick={() => navigate("/premium")} className="premium glass-card">
           <div className="addition-image bg">
             <img src={PremiumImg1} alt="Premium" width="38" height="38" />
           </div>
           <h3>Premium</h3>
-          <p>Unlock exclusive</p>
         </button>
       </div>
 

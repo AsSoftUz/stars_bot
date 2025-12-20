@@ -146,9 +146,6 @@ button:active {
             border: none;
             gap: 8px;
             cursor: pointer;
-            // --tw-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
-            // box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
-            // background: rgb(34 211 238);
             background-image: linear-gradient(to bottom right, #facc15, #f97316);
             --tw-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
             box-shadow: 0 0 #0000, 0 0 #0000, var(--tw-shadow);
@@ -170,6 +167,7 @@ button:active {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 12px;
             &:hover {
                 background-color: rgb(255 255 255 / 0.1);
             }
