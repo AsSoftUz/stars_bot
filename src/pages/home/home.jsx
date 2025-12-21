@@ -75,7 +75,7 @@ const Home = () => {
       <div className="additions">
         <button onClick={() => navigate("/stars")} className="history glass-card">
           <div className="addition-image">
-            {/* <img src={PremiumImg} alt="Stars" width="64" height="64" /> */}
+            <img src={PremiumImg} alt="Stars" width="64" height="64" />
           </div>
           <h2>Stars</h2>
         </button>
