@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
 import starsImg from "../../assets/stars.webp";
-import useStars from "../../hooks/useGetStars"; // Hookni import qilish
+import useGetStars from "../../hooks/useGetStars"; // Hookni import qilish
 
 const Stars = () => {
     useTelegramBack("/");
     const navigate = useNavigate();
     
     // Hookdan ma'lumotlarni olamiz
-    const { starsOptions, loading, error } = useStars();
+    const { starsOptions, loading, error } = useGetStars();
     const [selected, setSelected] = useState(null);
 
     // Ma'lumotlar kelganda birinchi elementni avtomatik tanlangan qilish
@@ -39,7 +39,6 @@ const Stars = () => {
             
             <form className="plans" onSubmit={handleSubmit}>
                 <h3>Choose a plan</h3>
-                
                 {starsOptions.map((option) => (
                     <label
                         key={option.id}
