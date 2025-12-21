@@ -4,8 +4,10 @@ import useTopup from "../../hooks/useTopup";
 import tick from "../../assets/tick.gif";
 import "./topup.scss";
 import ccard from "../../assets/card.jpg";
+import useTelegramBack from "../../hooks/useTelegramBack";
 
 const Topup = () => {
+    useTelegramBack("/topupbegin");
     const location = useLocation();
     const navigate = useNavigate();
     const { amount } = location.state || {};
