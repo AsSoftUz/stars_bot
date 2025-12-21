@@ -13,6 +13,8 @@ const useGetStars = () => {
             const res = await api.get("/stars/"); // API manzilingiz
             // Faqat is_active: true bo'lganlarini saralab olamiz
             const activeStars = res.data.filter(item => item.is_active);
+            console.log(activeStars);
+            
             setStarsOptions(activeStars);
         } catch (err) {
             setError(err.message || "Stars yuklashda xatolik yuz berdi");
