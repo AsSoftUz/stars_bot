@@ -9,6 +9,7 @@ import Tranzaction from './pages/tranzaction/tranzaction'
 import TopUpBegin from './pages/topup/topupBegin'
 import TopUp from './pages/topup/topup'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import './utils/i18n';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
