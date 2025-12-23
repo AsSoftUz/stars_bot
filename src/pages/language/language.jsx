@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'; // i18n ni ishlatish uchun
 import './language.scss';
 
 const languages = [
   { code: 'uz', name: "O'zbekcha", flag: '🇺🇿' },
-  { code: 'en', name: 'English', flag: 'gb' },
+  { code: 'en', name: 'English', flag: '🇬🇧' }, // 'gb' emas emoji qo'shildi
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ];
 
@@ -37,17 +38,21 @@ const CheckIcon = () => (
   </svg>
 );
 
-const Language = ({ defaultLanguage = 'en', onChange }) => {
+const Language = ({ onChange }) => {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(defaultLanguage);
+  
+  // Dastlabki tilni i18n'dan olamiz
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
   const containerRef = useRef(null);
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleToggle = () => setIsOpen(!isOpen);
 
   const handleSelect = (langCode) => {
+    i18n.changeLanguage(langCode); // i18next tilini o'zgartirish
     setSelectedLanguage(langCode);
+    localStorage.setItem("language", langCode); // LocalStorage ga saqlash
+    
     setIsOpen(false);
     if (onChange) {
       onChange(langCode);
@@ -75,7 +80,6 @@ const Language = ({ defaultLanguage = 'en', onChange }) => {
         className={`language-switcher__trigger ${isOpen ? 'language-switcher__trigger--active' : ''}`}
         onClick={handleToggle}
         aria-label="Change language"
-        aria-expanded={isOpen}
       >
         <GlobeIcon />
       </button>
