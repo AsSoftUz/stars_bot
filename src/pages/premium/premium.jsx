@@ -66,7 +66,7 @@ const Premium = () => {
 
                                 <p className="per-month">{plan.perMonth} / {t("month")}</p>
                             </div>
-                            <p className="price">USD {plan.price}</p>
+                            <p className="price">UZS {plan.price}</p>
                         </div>
                     </label>
                 ))}
