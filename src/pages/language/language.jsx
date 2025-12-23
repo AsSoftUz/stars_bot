@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next'; // i18n ni ishlatish uchun
+import { useTranslation } from 'react-i18next';
 import './language.scss';
-
+import uk from '../../assets/flags/uk.png';
+import uz from '../../assets/flags/uz.png';
+import ru from '../../assets/flags/ru.png';
 const languages = [
-  { code: 'uz', name: "O'zbekcha", flag: '🇺🇿' },
-  { code: 'en', name: 'English', flag: '🇬🇧' }, // 'gb' emas emoji qo'shildi
-  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
+  { code: 'uz', name: "O'zbekcha", flag: uz },
+  { code: 'en', name: 'English', flag: uk },
+  { code: 'ru', name: 'Русский', flag: ru }
 ];
 
 const GlobeIcon = () => (
@@ -49,9 +51,9 @@ const Language = ({ onChange }) => {
   const handleToggle = () => setIsOpen(!isOpen);
 
   const handleSelect = (langCode) => {
-    i18n.changeLanguage(langCode); // i18next tilini o'zgartirish
+    i18n.changeLanguage(langCode);
     setSelectedLanguage(langCode);
-    localStorage.setItem("language", langCode); // LocalStorage ga saqlash
+    localStorage.setItem("language", langCode);
     
     setIsOpen(false);
     if (onChange) {
@@ -94,7 +96,7 @@ const Language = ({ onChange }) => {
               role="option"
               aria-selected={selectedLanguage === lang.code}
             >
-              <span className="language-switcher__flag-emoji">{lang.flag}</span>
+              <img src={lang.flag} className="language-switcher__flag-emoji" alt={lang.name} />
               <span className="language-switcher__label">{lang.name}</span>
               <CheckIcon />
             </li>

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useTelegramBack from "../../hooks/useTelegramBack";
 import "./topup.scss";
 import { useTranslation } from 'react-i18next';
+import Language from "../language/language";
 
 const TopUpBegin = () => {
     useTelegramBack("/");
@@ -24,6 +25,7 @@ const TopUpBegin = () => {
     return (
         <div className="topup">
             <h2>{t("topupBeginTitle")}</h2>
+            <Language />
             <form onSubmit={handleSubmit}>
                 <input
                     type="number"

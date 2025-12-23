@@ -15,8 +15,8 @@ const Topup = () => {
     const { amount } = location.state || {};
 
     const [file, setFile] = useState(null);
-    const [copySuccess, setCopySuccess] = useState(false); // Nusxalash holati
-    const [fileError, setFileError] = useState(""); // Fayl uchun xatolik
+    const [copySuccess, setCopySuccess] = useState(false);
+    const [fileError, setFileError] = useState("");
     
     const { submitTopup, loading, success, error: apiError } = useTopup();
 
@@ -25,18 +25,18 @@ const Topup = () => {
 
     // Nusxalash funksiyasi
     const handleCopy = (e, text) => {
-        e.preventDefault(); // Form yuborilib ketishining oldini oladi
-        navigator.clipboard.writeText(text.replace(/\s/g, '')) // Bo'shliqlarsiz nusxalash
+        e.preventDefault();
+        navigator.clipboard.writeText(text.replace(/\s/g, ''))
             .then(() => {
                 setCopySuccess(true);
                 tg.HapticFeedback.impactOccurred('light');
-                setTimeout(() => setCopySuccess(false), 2000); // 2 soniyadan keyin o'chadi
+                setTimeout(() => setCopySuccess(false), 2000);
             });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setFileError(""); // Xatolikni tozalash
+        setFileError("");
 
         if (!amount) {
             navigate("/topupbegin");
@@ -64,10 +64,10 @@ const Topup = () => {
                     <div className="status-icon">
                         <img src={tick} alt="" width="56px" />
                     </div>
-                    <h2>So'rov yuborildi!</h2>
-                    <p>To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.</p>
+                    <h2>{t("submittedTitle")}</h2>
+                    <p>{t("submittedMessage")}</p>
                     <button onClick={() => navigate("/")} className="submit-btn">
-                        Asosiy sahifaga qaytish
+                        {t("backToHomeButton")}
                     </button>
                 </div>
             </div>

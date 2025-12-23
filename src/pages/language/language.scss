@@ -22,7 +22,6 @@ $tg-hover: #2b3d4f;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
-    position: relative;
     overflow: hidden;
 
     &::before {
@@ -35,6 +34,9 @@ $tg-hover: #2b3d4f;
     }
 
     &:hover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       border-color: $tg-accent;
       transform: scale(1.05);
       box-shadow: 0 4px 20px rgba($tg-accent, 0.3);
@@ -61,10 +63,6 @@ $tg-hover: #2b3d4f;
     transition: transform 0.3s ease;
     position: relative;
     z-index: 1;
-
-    // .language-switcher__trigger:hover & {
-    //   transform: rotate(15deg);
-    // }
 
     .language-switcher__trigger--active & {
       color: $tg-accent;

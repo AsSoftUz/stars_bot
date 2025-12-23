@@ -12,5 +12,8 @@
   "fileError": "Iltimos, chek faylini yuklang.",
   "amountError": "Iltimos, to'g'ri summani kiriting (minimal 1000 so'm).",
   "submitting": "Yuborilmoqda...",
-  "submitted": "Tasdiqlash va jo'natish"
+  "submitted": "Tasdiqlash va jo'natish",
+  "submittedTitle": "So'rov yuborildi!",
+  "submittedMessage": "To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.",
+  "backToHomeButton": "Asosiy sahifaga qaytish"
 }

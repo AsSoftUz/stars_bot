@@ -12,5 +12,8 @@
   "fileError": "Please upload the receipt file.",
   "amountError": "Please enter the correct amount (minimum 1000 UZS).",
   "submitting": "Submitting...",
-  "submitted": "Confirm and Submit"
+  "submitted": "Confirm and Submit",
+  "submittedTitle": "Request Submitted!",
+  "submittedMessage": "Your payment is being verified. It will be added to your account once approved by the admin.",
+  "backToHomeButton": "Back to Home"
 }
