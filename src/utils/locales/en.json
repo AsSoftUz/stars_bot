@@ -1,4 +1,16 @@
 {
   "topup": "Top up balance",
-  "totalBalance": "Total balance"
+  "totalBalance": "Total balance",
+  "topupBeginTitle": "Top up balance",
+  "minimalAmountPlaceholder": "Minimum 1000 UZS",
+  "proceedToTopupButton": "Next step",
+  "topupAmount": "Payment amount",
+  "currency": "UZS",
+  "copied": "Copied!",
+  "instructionText": "Transfer money to the card number and upload the receipt:",
+  "uploadReceipt": "Upload receipt",
+  "fileError": "Please upload the receipt file.",
+  "amountError": "Please enter the correct amount (minimum 1000 UZS).",
+  "submitting": "Submitting...",
+  "submitted": "Confirm and Submit"
 }

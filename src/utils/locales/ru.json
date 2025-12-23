@@ -1,4 +1,16 @@
 {
   "topup": "Заполните баланс",
-  "totalBalance": "Общий баланс"
+  "totalBalance": "Общий баланс",
+  "topupBeginTitle": "Заполните баланс",
+  "minimalAmountPlaceholder": "Минимум 1000 сум",
+  "proceedToTopupButton": "Далее",
+  "topupAmount": "Сумма платежа",
+  "currency": "сум",
+  "copied": "Скопировано!",
+  "instructionText": "Переведите деньги на номер карты и загрузите чек:",
+  "uploadReceipt": "Загрузить чек",
+  "fileError": "Пожалуйста, загрузите файл чека.",
+  "amountError": "Пожалуйста, введите правильную сумму (минимум 1000 сум).",
+  "submitting": "Отправка...",
+  "submitted": "Подтвердить и отправить"
 }

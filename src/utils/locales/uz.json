@@ -1,4 +1,16 @@
 {
   "topup": "Hisobni to'ldirish",
-  "totalBalance": "Umumiy Hisob"
+  "totalBalance": "Umumiy Hisob",
+  "topupBeginTitle": "Hisobni to'ldirish",
+  "minimalAmountPlaceholder": "Minimal 1000 so'm",
+  "proceedToTopupButton": "Keyingi qadam",
+  "topupAmount": "To'lov summasi",
+  "currency": "so'm",
+  "copied": "Nusxalandi!",
+  "instructionText": "Karta raqamiga pul o'tkazib, chekni yuklang:",
+  "uploadReceipt": "Chekni yuklash",
+  "fileError": "Iltimos, chek faylini yuklang.",
+  "amountError": "Iltimos, to'g'ri summani kiriting (minimal 1000 so'm).",
+  "submitting": "Yuborilmoqda...",
+  "submitted": "Tasdiqlash va jo'natish"
 }

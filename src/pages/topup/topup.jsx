@@ -5,11 +5,13 @@ import tick from "../../assets/tick.gif";
 import "./topup.scss";
 import ccard from "../../assets/card.jpg";
 import useTelegramBack from "../../hooks/useTelegramBack";
+import { useTranslation } from 'react-i18next';
 
 const Topup = () => {
     useTelegramBack("/topupbegin");
     const location = useLocation();
     const navigate = useNavigate();
+    const { t, i18n } = useTranslation();
     const { amount } = location.state || {};
 
     const [file, setFile] = useState(null);
@@ -42,7 +44,7 @@ const Topup = () => {
         }
 
         if (!file) {
-            setFileError("Iltimos, avval to'lov chekini yuklang!");
+            setFileError(t("fileError"));
             tg.HapticFeedback.notificationOccurred('error');
             return;
         }
@@ -75,14 +77,14 @@ const Topup = () => {
     return (
         <div className="topup">
             <form onSubmit={handleSubmit}>
-                <p>To'lov summasi: <b>{amount} so'm</b></p>
+                <p>{t("topupAmount")}: <b>{amount} {t("currency")}</b></p>
                 
                 <div className="card-wrapper">
                     <img src={ccard} alt="card" width="100%" />
                     
                     {/* Nusxalash tugmasi */}
                     <button 
-                        type="button" // type="button" bo'lishi shart, aks holda form yuboradi
+                        type="button"
                         className="ccardBtn" 
                         onClick={(e) => handleCopy(e, "9860 1766 1880 7588")}
                     >
@@ -92,22 +94,22 @@ const Topup = () => {
                         </span>
                         
                         {/* Nusxalandi Tooltip */}
-                        {copySuccess && <div className="copy-tooltip">Nusxalandi!</div>}
+                        {copySuccess && <div className="copy-tooltip">{t("copied")}</div>}
                     </button>
                 </div>
 
-                <p className="instruction-text">Karta raqamiga pul o'tkazib, chekni yuklang:</p>
+                <p className="instruction-text">{t("instructionText")}</p>
 
                 <label className="custum-file-upload" htmlFor="file">
                     <div className="text">
-                        <span>{file ? file.name : "Chekni yuklash"}</span>
+                        <span>{file ? file.name : t("uploadReceipt")}</span>
                     </div>
                     <input 
                         type="file" 
                         id="file" 
                         onChange={(e) => {
                             setFile(e.target.files[0]);
-                            setFileError(""); // Fayl tanlanganda xatoni o'chirish
+                            setFileError("");
                         }} 
                         accept="image/*" 
                     />
@@ -121,7 +123,7 @@ const Topup = () => {
                 )}
 
                 <button type="submit" className="submit-btn" disabled={loading}>
-                    {loading ? "Yuborilmoqda..." : "Tasdiqlash va jo'natish"}
+                    {loading ? t("submitting") : t("submitted")}
                 </button>
             </form>
         </div>
