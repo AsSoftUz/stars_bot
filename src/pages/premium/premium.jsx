@@ -2,28 +2,30 @@ import "./premium.scss"
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
+import { useTranslation } from 'react-i18next';
 
 const Premium = () => {
 
     const navigate = useNavigate();
     useTelegramBack("/");
     const [selected, setSelected] = useState("1m");
+    const { t, i18n } = useTranslation();
 
     const plans = [
-        { id: "1m", label: "1 Month", price: 4.99, perMonth: "USD 4.99 / month" },
-        { id: "3m", label: "3 Months", price: 13.99, perMonth: "USD 4.66 / month", save: "SAVE 5%" },
-        { id: "6m", label: "6 Months", price: 26.99, perMonth: "USD 4.49 / month", save: "SAVE 10%" },
-        { id: "12m", label: "12 Months", price: 39.99, perMonth: "USD 3.33 / month", save: "SAVE 33%" },
+        { id: "1m", label: t("1Month"), price: 4.99, perMonth: "UZS 4.99" },
+        { id: "3m", label: t("3Months"), price: 13.99, perMonth: "UZS 4.66", save: t("SAVE 5%") },
+        { id: "6m", label: t("6Months"), price: 26.99, perMonth: "UZS 4.49", save: t("SAVE 10%") },
+        { id: "12m", label: t("12Months"), price: 39.99, perMonth: "UZS 3.33", save: t("SAVE 33%") },
     ];
 
     const features = [
-        { id: 1, text: "Double Limits" },
-        { id: 2, text: "4 GB Upload Size" },
-        { id: 3, text: "Faster Download Speed" },
-        { id: 4, text: "Voice-to-Text Conversion" },
-        { id: 5, text: "Premium Stickers" },
-        { id: 6, text: "Unique Reactions" },
-        { id: 7, text: "Animated Emoji Status" }
+        { id: 1, text: t("Double Limits") },
+        { id: 2, text: t("4 GB Upload Size") },
+        { id: 3, text: t("Faster Download Speed") },
+        { id: 4, text: t("Voice-to-Text Conversion") },
+        { id: 5, text: t("Premium Stickers") },
+        { id: 6, text: t("Unique Reactions") },
+        { id: 7, text: t("Animated Emoji Status") }
     ]
 
     return (
@@ -39,11 +41,11 @@ const Premium = () => {
                 <div className="bg-circle"></div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg>
                 <h2 className="premium-gradient">Premium</h2>
-                <p>Exclusive features and doubled limits for power users.</p>
+                <p>{t("Exclusive features and doubled limits for power users.")}</p>
             </div>
 
             <div className="plans">
-                <h3>Choose a plan</h3>
+                <h3>{t("Choose a plan")}</h3>
                 {plans.map((plan) => (
                     <label
                         key={plan.id}
@@ -62,7 +64,7 @@ const Premium = () => {
                                     {plan.save && <span className="save">{plan.save}</span>}
                                 </div>
 
-                                <p className="per-month">{plan.perMonth}</p>
+                                <p className="per-month">{plan.perMonth} / {t("month")}</p>
                             </div>
                             <p className="price">USD {plan.price}</p>
                         </div>
@@ -72,7 +74,7 @@ const Premium = () => {
 
             <div className="features glass-card">
                 <h3>
-                    Included Features
+                    {t("Premium Features")}
                 </h3>
 
                 {features.map((feature) => (
@@ -84,7 +86,7 @@ const Premium = () => {
             </div>
             
             <button className="subscribe-btn" onClick={() => navigate("/tranzaction")}>
-                Subscribe for USD 39.99
+                {t("Subscribe")}
             </button>
 
         </div>

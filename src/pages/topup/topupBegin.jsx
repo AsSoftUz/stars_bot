@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useTelegramBack from "../../hooks/useTelegramBack";
+import Loader from "../loader/loader";
 import "./topup.scss";
 import { useTranslation } from 'react-i18next';
 

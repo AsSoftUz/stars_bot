@@ -6,6 +6,7 @@ import "./topup.scss";
 import ccard from "../../assets/card.jpg";
 import useTelegramBack from "../../hooks/useTelegramBack";
 import { useTranslation } from 'react-i18next';
+import Loader from "../loader/loader";
 
 const Topup = () => {
     useTelegramBack("/topupbegin");
@@ -76,6 +77,9 @@ const Topup = () => {
 
     return (
         <div className="topup">
+            {loading && (
+                <Loader />
+            )}
             <form onSubmit={handleSubmit}>
                 <p>{t("topupAmount")}: <b>{amount} {t("currency")}</b></p>
                 

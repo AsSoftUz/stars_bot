@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useGetOrCreateUser from "../../hooks/useGetOrCreateUser";
 import Language from "../language/language";
 import profileImg from "../../assets/profile.jpg";
+import Loader from "../loader/loader";
 import { useTranslation } from 'react-i18next';
 
 const Home = () => {
@@ -37,14 +38,7 @@ const Home = () => {
   // 2-bosqich: API'dan ma'lumot kelishini kutish
   if (loading) {
     return (
-      <div className="home-loading">
-        <svg class="pl" viewBox="0 0 160 160" width="160px" height="160px" xmlns="http://www.w3.org/2000/svg">
-
-          <g class="pl__ring-rotate">
-            <circle class="pl__ring-stroke" cx="80" cy="80" r="72" fill="none" stroke="hsl(223,90%,55%)" stroke-width="16" stroke-dasharray="452.39 452.39" stroke-dashoffset="452" stroke-linecap="round" transform="rotate(-45,80,80)"></circle>
-          </g>
-        </svg>
-      </div>
+      <Loader />
     );
   }
 
@@ -78,13 +72,13 @@ const Home = () => {
       <div className="additions">
         <button onClick={() => navigate("/stars")} className="history glass-card">
           <div className="addition-image">
-            <img src={PremiumImg} alt="Stars" width="72" height="72" />
+            <img src={PremiumImg} alt="Stars" width="78" height="78" />
           </div>
           <h2>Stars</h2>
         </button>
         <button onClick={() => navigate("/premium")} className="premium glass-card">
           <div className="addition-image bg">
-            <img src={PremiumImg1} alt="Premium" width="72" height="72" />
+            <img src={PremiumImg1} alt="Premium" width="78" height="78" />
           </div>
           <h2>Premium</h2>
         </button>

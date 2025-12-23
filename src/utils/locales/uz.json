@@ -15,5 +15,29 @@
   "submitted": "Tasdiqlash va jo'natish",
   "submittedTitle": "So'rov yuborildi!",
   "submittedMessage": "To'lovingiz tekshirilmoqda. Admin tasdiqlagandan so'ng hisobingizga qo'shiladi.",
-  "backToHomeButton": "Asosiy sahifaga qaytish"
+  "backToHomeButton": "Asosiy sahifaga qaytish",
+  "buyButton": "Sotib olish",
+  "sendingButton": "Yuborilmoqda...",
+  "selectStarsPlan": "Paketni tanlang:",
+
+  "1Month": "1 Oy",
+  "3Months": "3 Oy",
+  "6Months": "6 Oy",
+  "12Months": "12 Oy",
+  "SAVE 5%": "5% TEJANG",
+  "SAVE 10%": "10% TEJANG",
+  "SAVE 33%": "33% TEJANG",
+  "Double Limits": "Chegaralarni ikki baravar oshirish",
+  "4 GB Upload Size": "Yuklash hajmi 4 GB",
+  "Faster Download Speed": "Yuklab olish tezligi oshdi",
+  "Voice-to-Text Conversion": "Ovozdan matnga aylantirish",
+  "Premium Stickers": "Premium stikerlar",
+  "Unique Reactions": "Noyob reaksiyalar",
+  "Animated Emoji Status": "Animatsiyalangan emoji holati",
+  "Exclusive features and doubled limits for power users.": "Kuchli foydalanuvchilar uchun eksklyuziv xususiyatlar va ikki baravar oshirilgan chegaralar.",
+  "Choose a plan": "Rejani tanlang", 
+  "Premium Features": "Premium Xususiyatlar",
+  "Subscribe": "Obuna bo'lish",
+  "month": "oy"
+
 }

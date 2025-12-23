@@ -15,5 +15,30 @@
   "submitted": "Confirm and Submit",
   "submittedTitle": "Request Submitted!",
   "submittedMessage": "Your payment is being verified. It will be added to your account once approved by the admin.",
-  "backToHomeButton": "Back to Home"
+  "backToHomeButton": "Back to Home",
+  "buyButton": "Buy Stars",
+  "sendingButton": "Sending...",
+  "selectStarsPlan": "Select a Stars plan:",
+
+
+  "1Month": "1 Month",
+  "3Months": "3 Months",
+  "6Months": "6 Months",
+  "12Months": "12 Months",
+  "SAVE 5%": "SAVE 5%",
+  "SAVE 10%": "SAVE 10%",
+  "SAVE 33%": "SAVE 33%",
+  "Double Limits": "Double Limits",
+  "4 GB Upload Size": "4 GB Upload Size",
+  "Faster Download Speed": "Faster Download Speed",
+  "Voice-to-Text Conversion": "Voice-to-Text Conversion",
+  "Premium Stickers": "Premium Stickers",
+  "Unique Reactions": "Unique Reactions",
+  "Animated Emoji Status": "Animated Emoji Status",
+  "Exclusive features and doubled limits for power users.": "Exclusive features and doubled limits for power users.",
+  "Choose a plan": "Choose a plan",
+  "Premium Features": "Premium Features",
+  "Subscribe": "Subscribe",
+  "month": "month"
+
 }
