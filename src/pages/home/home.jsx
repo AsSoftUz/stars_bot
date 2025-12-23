@@ -5,6 +5,7 @@ import PremiumImg from "../../assets/stars.webp";
 import { useNavigate } from "react-router-dom";
 import useGetOrCreateUser from "../../hooks/useGetOrCreateUser";
 import Language from "../language/language";
+import profileImg from "../../assets/profile.jpg";
 import { useTranslation } from 'react-i18next';
 
 const Home = () => {
@@ -55,7 +56,7 @@ const Home = () => {
     <div className="home">
       <div className="user-info">
         <div className="name">
-          <img src={tgUser.photo_url || "https://via.placeholder.com/50"} alt="Profile" />
+          <img src={tgUser.photo_url || {profileImg}} alt="Profile" />
           <h1>
             {user.fullname}
             {user.username && <p>@{user.username}</p>}
