@@ -1,6 +1,6 @@
 // src/hooks/usePremium.js
 import { useState, useEffect } from "react";
-import api from "../api/axios"; // O'zingizning axios instansingiz
+import api from "../api/axios"; 
 
 const useGetPremium = () => {
     const [premiumOptions, setPremiumOptions] = useState([]);
@@ -10,27 +10,30 @@ const useGetPremium = () => {
     const fetchPremium = async () => {
         try {
             setLoading(true);
-            const res = await api.get("/premium/"); // API manzilingiz (swaggerdagidek)
-            
-            // Faqat is_active: true bo'lganlarini saralash va UI uchun formatlash
+            const res = await api.get("/premium/"); 
             const activePlans = res.data
                 .filter(item => item.is_active)
-                .map(item => {
-                    const total = parseFloat(item.price);
-                    return {
-                        ...item,
-                        // Bir oylik narxni hisoblash (masalan: 100 000 / 3)
-                        perMonth: Math.round(total / item.duration).toLocaleString(),
-                        // Umumiy narxni formatlash (100000 -> 100 000)
-                        formattedPrice: total.toLocaleString()
-                    };
-                });
-            
+                .map(item => ({
+                    ...item,
+                    perMonth: Math.round(Math.abs(parseFloat(item.price)) / item.duration).toLocaleString(),
+                    formattedPrice: Math.abs(parseFloat(item.price)).toLocaleString()
+                }));
             setPremiumOptions(activePlans);
         } catch (err) {
-            setError(err.message || "Premium planlarni yuklashda xatolik");
+            setError(err.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    // --- SATIB OLISH FUNKSIYASI ---
+    const buyPremium = async (data) => {
+        try {
+            // data ichida: { username, miqdor, user_id } bo'lishi kerak
+            const res = await api.post("/buy-premium/", data);
+            return res.data;
+        } catch (err) {
+            throw err.response?.data?.error || "Sotib olishda xatolik yuz berdi";
         }
     };
 
@@ -38,7 +41,7 @@ const useGetPremium = () => {
         fetchPremium();
     }, []);
 
-    return { premiumOptions, loading, error, refetch: fetchPremium };
+    return { premiumOptions, loading, error, buyPremium, refetch: fetchPremium };
 };
 
 export default useGetPremium;

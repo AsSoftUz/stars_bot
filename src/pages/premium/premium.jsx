@@ -2,7 +2,7 @@ import "./premium.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
-import useGetPremium from "../../hooks/useGetPremium"; // Hookni import qiling
+import useGetPremium from "../../hooks/useGetPremium";
 import { useTranslation } from 'react-i18next';
 
 const Premium = () => {
@@ -12,16 +12,19 @@ const Premium = () => {
     // Telegram orqaga qaytish tugmasi
     useTelegramBack("/");
 
-    // API dan ma'lumotlarni olish
-    const { premiumOptions, loading, error } = useGetPremium();
-    const [selected, setSelected] = useState(null);
+    // Hookdan ma'lumotlar va buy funksiyasini olamiz
+    const { premiumOptions, loading, error, buyPremium } = useGetPremium();
+    
+    // Tanlangan butun plan obyektini saqlash uchun state
+    const [selectedPlan, setSelectedPlan] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Ma'lumotlar kelganda birinchi elementni avtomatik tanlash
+    // Ma'lumotlar kelganda birinchi plan obyektini avtomatik tanlash
     useEffect(() => {
-        if (premiumOptions.length > 0 && !selected) {
-            setSelected(premiumOptions[0].id);
+        if (premiumOptions.length > 0 && !selectedPlan) {
+            setSelectedPlan(premiumOptions[0]);
         }
-    }, [premiumOptions, selected]);
+    }, [premiumOptions, selectedPlan]);
 
     const features = [
         { id: 1, text: t("Double Limits") },
@@ -33,25 +36,41 @@ const Premium = () => {
         { id: 7, text: t("Animated Emoji Status") }
     ];
 
-    // Yuklanish holati
-    if (loading) {
-        return (
-            <div className="premium-page loading">
-                <div className="spinner"></div>
-                <p>{t("Loading...")}</p>
-            </div>
-        );
-    }
+    // Satib olish (Subscribe) funksiyasi
+    const handleSubscribe = async () => {
+        if (!selectedPlan) return;
 
-    // Xatolik holati
-    if (error) {
-        return (
-            <div className="premium-page error">
-                <p>{t("Error loading plans")}: {error}</p>
-                <button onClick={() => window.location.reload()}>{t("Retry")}</button>
-            </div>
-        );
-    }
+        // Telegram WebApp orqali foydalanuvchi ma'lumotlarini olish
+        const tg = window.Telegram?.WebApp;
+        const user = tg?.initDataUnsafe?.user;
+
+        // Swaggerda so'ralgan payload
+        const payload = {
+            username: user?.username || "unknown",
+            miqdor: parseFloat(selectedPlan.price), // Plan narxi
+            user_id: user?.id || 0
+        };
+
+        try {
+            setIsSubmitting(true);
+            await buyPremium(payload); // POST so'rovi
+            
+            // Muvaffaqiyatli bo'lsa tranzaksiya sahifasiga o'tish
+            tg?.showAlert(t("Success! Your request is being processed."));
+            navigate("/tranzaction");
+        } catch (err) {
+            tg?.showPopup({
+                title: t("Error"),
+                message: err.toString(),
+                buttons: [{ type: "ok" }]
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    if (loading) return <div className="loader">{t("Loading...")}</div>;
+    if (error) return <div className="error">{t("Error")}: {error}</div>;
 
     return (
         <div className="premium-page">
@@ -63,7 +82,7 @@ const Premium = () => {
 
             <div className="hero glass-card">
                 <div className="bg-circle"></div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path>
                     <path d="M5 21h14"></path>
                 </svg>
@@ -76,22 +95,25 @@ const Premium = () => {
                 {premiumOptions.map((plan) => (
                     <label
                         key={plan.id}
-                        className={`glass-card plan ${selected === plan.id ? "active" : ""}`}>
+                        className={`glass-card plan ${selectedPlan?.id === plan.id ? "active" : ""}`}
+                        onClick={() => setSelectedPlan(plan)}
+                    >
                         <input
                             type="radio"
                             name="premium_plan"
-                            value={plan.id}
-                            checked={selected === plan.id}
-                            onChange={() => setSelected(plan.id)}
+                            checked={selectedPlan?.id === plan.id}
+                            readOnly
                         />
 
                         <div className="contents">
                             <div className="content">
                                 <div className="top">
-                                    <h3>{plan.duration} {t("Month_label", { count: plan.duration })}</h3>
-                                    {/* Chegirmalarni durationga qarab ko'rsatish */}
-                                    {plan.duration === 12 && <span className="save">{t("SAVE 33%")}</span>}
-                                    {plan.duration === 6 && <span className="save">{t("SAVE 10%")}</span>}
+                                    <h3>{plan.duration} {t("Months")}</h3>
+                                    {plan.duration >= 6 && (
+                                        <span className="save">
+                                            {plan.duration === 12 ? t("SAVE 33%") : t("SAVE 10%")}
+                                        </span>
+                                    )}
                                 </div>
                                 <p className="per-month">UZS {plan.perMonth} / {t("month")}</p>
                             </div>
@@ -105,7 +127,7 @@ const Premium = () => {
                 <h3>{t("Premium Features")}</h3>
                 {features.map((feature) => (
                     <p key={feature.id}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgb(168 85 247)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgb(168 85 247)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="10"></circle>
                             <path d="m9 12 2 2 4-4"></path>
                         </svg>
@@ -116,10 +138,10 @@ const Premium = () => {
             
             <button 
                 className="subscribe-btn" 
-                disabled={!selected}
-                onClick={() => navigate("/tranzaction", { state: { planId: selected } })}
+                disabled={isSubmitting || !selectedPlan}
+                onClick={handleSubscribe}
             >
-                {t("Subscribe")}
+                {isSubmitting ? t("Processing...") : t("Subscribe")}
             </button>
         </div>
     );
