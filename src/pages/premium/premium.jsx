@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
 import useGetPremium from "../../hooks/useGetPremium";
 import { useTranslation } from 'react-i18next';
+import Loader from "../loader/loader";
 
 const Premium = () => {
     const navigate = useNavigate();
@@ -14,8 +15,9 @@ const Premium = () => {
     const { premiumOptions, loading, error, buyPremium } = useGetPremium();
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    // Muvaffaqiyatli holat uchun yangi state
+    const [isSuccess, setIsSuccess] = useState(false);
 
-    // Ma'lumotlar kelganda birinchi plan obyektini avtomatik tanlash
     useEffect(() => {
         if (premiumOptions.length > 0 && !selectedPlan) {
             setSelectedPlan(premiumOptions[0]);
@@ -38,19 +40,24 @@ const Premium = () => {
         const tg = window.Telegram?.WebApp;
         const user = tg?.initDataUnsafe?.user;
 
-        // Yangi Swagger formatiga mos payload
         const payload = {
-            user_id: user?.id || 6937643642, // Test uchun fallback ID
+            user_id: user?.id || 6937643642,
             username: user?.username ? `@${user.username}` : "@Coder_Abdullayev", 
-            duration: selectedPlan.duration // Oylar soni: 3, 6, 12
+            duration: selectedPlan.duration
         };
 
         try {
             setIsSubmitting(true);
             await buyPremium(payload);
             
-            tg?.showAlert(t("So'rovingiz qabul qilindi!"));
-            navigate("/tranzaction");
+            // Alert o'rniga muvaffaqiyat holatini yoqamiz
+            setIsSuccess(true);
+            
+            // 3 soniyadan keyin tranzaksiyalar sahifasiga yo'naltirish (ixtiyoriy)
+            setTimeout(() => {
+                navigate("/tranzaction");
+            }, 3000);
+
         } catch (err) {
             tg?.showPopup({
                 title: t("Xatolik"),
@@ -62,9 +69,36 @@ const Premium = () => {
         }
     };
 
-    if (loading) return <div className="loader">{t("Yuklanmoqda...")}</div>;
-    if (error) return <div className="error">{t("Xatolik")}: {error}</div>;
+    // 1. Yuklanish holati
+    if (loading) return <Loader />;
 
+    // 2. Muvaffaqiyatli sahifa (Alert o'rniga)
+    if (isSuccess) {
+        return (
+            <div className="premium-page success-view">
+                <div className="glass-card success-card">
+                    <div className="success-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" strokeWidth="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                    <h2>{t("Muvaffaqiyatli!")}</h2>
+                    <p>{t("Sizning so'rovingiz qabul qilindi va tez orada ko'rib chiqiladi.")}</p>
+                    <button className="subscribe-btn" onClick={() => navigate("/tranzaction")}>
+                        {t("Tranzaksiyalarga o'tish")}
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
+    // 3. Xatolik holati
+    if (error) return <div className="error-container">
+        <p>{t("Xatolik")}: {error}</p>
+        <button onClick={() => window.location.reload()}>{t("Qayta urinish")}</button>
+    </div>;
+
+    // 4. Asosiy Premium sahifasi
     return (
         <div className="premium-page">
             <nav>
