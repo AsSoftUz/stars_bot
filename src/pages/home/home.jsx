@@ -43,9 +43,9 @@ const Home = () => {
   }
 
   // 3-bosqich: Agar xatolik tufayli user baribir kelmasa
-  if (!user) {
-    return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
-  }
+//   if (!user) {
+//     return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
+//   }
   return (
     <div className="home">
       <div className="user-info">
