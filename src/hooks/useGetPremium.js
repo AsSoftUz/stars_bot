@@ -20,7 +20,7 @@ const useGetPremium = () => {
                     return {
                         ...item,
                         // Bir oylik narxni hisoblash (masalan: 100 000 / 3)
-                        perMonth: round(total / item.duration).toLocaleString(),
+                        perMonth: Math.round(total / item.duration).toLocaleString(),
                         // Umumiy narxni formatlash (100000 -> 100 000)
                         formattedPrice: total.toLocaleString()
                     };
