@@ -29,10 +29,11 @@ const useGetPremium = () => {
     // --- SATIB OLISH FUNKSIYASI ---
     const buyPremium = async (data) => {
         try {
-            // data ichida: { username, miqdor, user_id } bo'lishi kerak
+            // data tarkibi: { user_id, username, duration }
             const res = await api.post("/buy-premium/", data);
             return res.data;
         } catch (err) {
+            // Serverdan kelgan xatolik xabarini qaytarish
             throw err.response?.data?.error || "Sotib olishda xatolik yuz berdi";
         }
     };

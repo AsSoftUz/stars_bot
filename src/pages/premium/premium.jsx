@@ -2,20 +2,16 @@ import "./premium.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
-import useGetPremium from "../../hooks/useGetPremium";
+import useGetPremium from "../../hooks/usePremium";
 import { useTranslation } from 'react-i18next';
 
 const Premium = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
     
-    // Telegram orqaga qaytish tugmasi
     useTelegramBack("/");
 
-    // Hookdan ma'lumotlar va buy funksiyasini olamiz
     const { premiumOptions, loading, error, buyPremium } = useGetPremium();
-    
-    // Tanlangan butun plan obyektini saqlash uchun state
     const [selectedPlan, setSelectedPlan] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -36,32 +32,29 @@ const Premium = () => {
         { id: 7, text: t("Animated Emoji Status") }
     ];
 
-    // Satib olish (Subscribe) funksiyasi
     const handleSubscribe = async () => {
         if (!selectedPlan) return;
 
-        // Telegram WebApp orqali foydalanuvchi ma'lumotlarini olish
         const tg = window.Telegram?.WebApp;
         const user = tg?.initDataUnsafe?.user;
 
-        // Swaggerda so'ralgan payload
+        // Yangi Swagger formatiga mos payload
         const payload = {
-            username: user?.username || "unknown",
-            miqdor: parseFloat(selectedPlan.price), // Plan narxi
-            user_id: user?.id || 0
+            user_id: user?.id || 6937643642, // Test uchun fallback ID
+            username: user?.username ? `@${user.username}` : "@Coder_Abdullayev", 
+            duration: selectedPlan.duration // Oylar soni: 3, 6, 12
         };
 
         try {
             setIsSubmitting(true);
-            await buyPremium(payload); // POST so'rovi
+            await buyPremium(payload);
             
-            // Muvaffaqiyatli bo'lsa tranzaksiya sahifasiga o'tish
-            tg?.showAlert(t("Success! Your request is being processed."));
+            tg?.showAlert(t("So'rovingiz qabul qilindi!"));
             navigate("/tranzaction");
         } catch (err) {
             tg?.showPopup({
-                title: t("Error"),
-                message: err.toString(),
+                title: t("Xatolik"),
+                message: typeof err === 'string' ? err : JSON.stringify(err),
                 buttons: [{ type: "ok" }]
             });
         } finally {
@@ -69,8 +62,8 @@ const Premium = () => {
         }
     };
 
-    if (loading) return <div className="loader">{t("Loading...")}</div>;
-    if (error) return <div className="error">{t("Error")}: {error}</div>;
+    if (loading) return <div className="loader">{t("Yuklanmoqda...")}</div>;
+    if (error) return <div className="error">{t("Xatolik")}: {error}</div>;
 
     return (
         <div className="premium-page">
@@ -109,11 +102,8 @@ const Premium = () => {
                             <div className="content">
                                 <div className="top">
                                     <h3>{plan.duration} {t("Months")}</h3>
-                                    {plan.duration >= 6 && (
-                                        <span className="save">
-                                            {plan.duration === 12 ? t("SAVE 33%") : t("SAVE 10%")}
-                                        </span>
-                                    )}
+                                    {plan.duration === 12 && <span className="save">SAVE 33%</span>}
+                                    {plan.duration === 6 && <span className="save">SAVE 10%</span>}
                                 </div>
                                 <p className="per-month">UZS {plan.perMonth} / {t("month")}</p>
                             </div>
@@ -141,7 +131,7 @@ const Premium = () => {
                 disabled={isSubmitting || !selectedPlan}
                 onClick={handleSubscribe}
             >
-                {isSubmitting ? t("Processing...") : t("Subscribe")}
+                {isSubmitting ? t("Yuborilmoqda...") : t("Subscribe")}
             </button>
         </div>
     );
