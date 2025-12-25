@@ -21,10 +21,7 @@
   "selectStarsPlan": "Select a Stars plan:",
 
 
-  "1Month": "1 Month",
-  "3Months": "3 Months",
-  "6Months": "6 Months",
-  "12Months": "12 Months",
+  "Month_label": "Month",
   "SAVE 5%": "SAVE 5%",
   "SAVE 10%": "SAVE 10%",
   "SAVE 33%": "SAVE 33%",

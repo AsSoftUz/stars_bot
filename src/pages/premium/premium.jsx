@@ -88,7 +88,7 @@ const Premium = () => {
                         <div className="contents">
                             <div className="content">
                                 <div className="top">
-                                    <h3>{plan.duration} {t("months_label", { count: plan.duration })}</h3>
+                                    <h3>{plan.duration} {t("Month_label", { count: plan.duration })}</h3>
                                     {/* Chegirmalarni durationga qarab ko'rsatish */}
                                     {plan.duration === 12 && <span className="save">{t("SAVE 33%")}</span>}
                                     {plan.duration === 6 && <span className="save">{t("SAVE 10%")}</span>}
