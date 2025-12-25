@@ -16,6 +16,7 @@ const useBuyStars = () => {
             return response.data;
         } catch (err) {
             setError(err.response?.data?.message || "Sotib olishda xatolik yuz berdi");
+            console.log("error stars", err, err.response)
             throw err;
         } finally {
             setLoading(false);
