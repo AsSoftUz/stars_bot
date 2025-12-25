@@ -27,13 +27,13 @@ const Home = () => {
   }, []);
 
   // 1-bosqich: Telegramdan ma'lumot kelishini kutish
-//   if (!tgUser) {
-//     return (
-//       <div className="home-loading">
-//         <h1>Saytni faqat Telegram orqali oching</h1>
-//       </div>
-//     );
-//   }
+  if (!tgUser) {
+    return (
+      <div className="home-loading">
+        <h1>Saytni faqat Telegram orqali oching</h1>
+      </div>
+    );
+  }
 
   // 2-bosqich: API'dan ma'lumot kelishini kutish
   if (loading) {
@@ -43,9 +43,9 @@ const Home = () => {
   }
 
   // 3-bosqich: Agar xatolik tufayli user baribir kelmasa
-//   if (!user) {
-//     return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
-//   }
+  if (!user) {
+    return <p>Ma'lumotlarni yuklashda xatolik yuz berdi.</p>;
+  }
   return (
     <div className="home">
       <div className="user-info">
