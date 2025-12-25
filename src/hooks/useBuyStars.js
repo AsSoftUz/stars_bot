@@ -13,6 +13,7 @@ const useBuyStars = () => {
         try {
             const response = await api.post("/stars-buy/", data);
             setSuccess(true);
+            console.log(response.data)
             return response.data;
         } catch (err) {
             setError(err.response?.data?.message || "Sotib olishda xatolik yuz berdi");
