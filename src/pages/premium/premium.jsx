@@ -2,7 +2,7 @@ import "./premium.scss";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import useTelegramBack from "../../hooks/useTelegramBack";
-import useGetPremium from "../../hooks/usePremium";
+import useGetPremium from "../../hooks/useGetPremium";
 import { useTranslation } from 'react-i18next';
 
 const Premium = () => {
